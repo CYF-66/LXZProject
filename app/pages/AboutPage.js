@@ -19,7 +19,7 @@ import Toast from 'react-native-root-toast';
 import {CheckPhone} from '../actions/myActions'
 const SHOW_API = 'https://www.showapi.com';
 const READING_REPO = 'https://github.com/attentiveness/reading';
-import DeviceInfo from 'react-native-device-info';
+// import DeviceInfo from 'react-native-device-info';
 const aboutLogo = require('../images/ic_launcher.png');
 
 export default class AboutPage extends Component {
@@ -71,7 +71,9 @@ export default class AboutPage extends Component {
                         <View style={styles.center}>
                             <Image style={styles.logo} source={aboutLogo} />
                             <Text style={styles.version}>
-                                {`v${DeviceInfo.getVersion()}`}
+                                1.0
+                            {/*<Text style={styles.version}>*/}
+                                {/*{`v${DeviceInfo.getVersion()}`}*/}
                             </Text>
                             <Text style={styles.title}>乐享租</Text>
                             <Text style={styles.subtitle}>认证旅途，乐享伴您

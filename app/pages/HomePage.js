@@ -220,7 +220,6 @@ export default class HomePage extends Component {
                     hidden={false}
                     animated={false}
                     barStyle={'light-content'}
-                    backgroundColor={'blue'}
                     translucent={true}
                 />
             <ScrollView

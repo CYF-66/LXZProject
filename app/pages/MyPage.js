@@ -162,8 +162,8 @@ export default class MyPage extends Component {
         console.log('image.path='+this.state.avatarSource);
         return (
             <ScrollView
-                iosautomaticallyAdjustContentInsets={true}
                 automaticallyAdjustContentInsets={true}
+                bounces={false}
                 // iosalwaysBounceVertical={false}
                 // iosbounces={false}
                 style={styles.container1}>

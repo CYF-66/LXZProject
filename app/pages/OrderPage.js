@@ -37,6 +37,7 @@ export default class OrderPage extends Component {
         })
 
     }
+
     componentWillMount() {
         Storage.get("isLogin").then((value) => {
             if(value){
@@ -64,6 +65,7 @@ export default class OrderPage extends Component {
             dispatch(GetOrderList(data,this.state.isLoading,isRefreshing,isLoadMore));
         });
     }
+
     render() {
 
 
@@ -74,8 +76,40 @@ export default class OrderPage extends Component {
         let content;
         content = (
             <View style={styles.container}>
-                {isLoading ?
-                    null :
+                {data=='' ?
+                    <View style={{flex: 1, flexDirection: 'column'}}>
+                        <ListView
+                            dataSource={this.state.dataSource.cloneWithRows(data)}
+                            renderRow={this._renderItem.bind(this)}
+                            // initialListSize={1}
+                            enableEmptySections={true}
+                            // onScroll={this._onScroll}
+                            // onEndReached={this._onEndReach.bind(this)}
+                            // onEndReachedThreshold={30}
+                            // renderFooter={this._renderFooter.bind(this)}
+                            // style={{height: Common.window.height - 64}}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={orderReducer.isRefreshing}
+                                    onRefresh={this._onRefresh.bind(this)}
+                                    title="正在加载中……"
+                                    color={Common.colors.red}
+                                />
+                            }
+                        />
+                        <View style={{position: 'absolute',
+                            top: 0,
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            justifyContent: 'center',
+                            alignItems:'center'}}>
+                            <Image source={require('../images/order/icon_empty.png')} style={{
+                                justifyContent: 'center',
+                                alignItems:'center'
+                            }}/>
+                        </View>
+                    </View> :
                     <View style={{flex: 1, flexDirection: 'column'}}>
                         <ListView
                             dataSource={this.state.dataSource.cloneWithRows(data)}

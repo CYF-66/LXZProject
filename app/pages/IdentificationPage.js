@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {
     View,
     Platform,
-    RefreshControl,
+    InteractionManager,
     TouchableOpacity,
     BackHandler,
     Text,
@@ -21,7 +21,7 @@ import CheckWorkContainer from '../containers/CheckWorkContainer'
 import CheckPhoneContainer from '../containers/CheckPhoneContainer'
 import CheckContactContainer from '../containers/CheckContactContainer'
 import Storage from '../util/Storage'
-
+import {GetUserInfo} from '../actions/myActions'
 export default class  IdentificationPage extends Component {
 
     constructor(props) {
@@ -29,6 +29,7 @@ export default class  IdentificationPage extends Component {
         this.state = ({
             isError: false,
             isLoading: true,
+
         })
     }
 
@@ -53,6 +54,15 @@ export default class  IdentificationPage extends Component {
         }
         return false;
     };
+
+    componentDidMount() {
+        InteractionManager.runAfterInteractions(() => {
+            const {dispatch} = this.props;
+            let data = {};
+            console.log('data===------------>' + JSON.stringify(data));
+            dispatch(GetUserInfo(data));
+        });
+    }
     render() {
         return (
             <View style={styles.container} needsOffscreenAlphaCompositing renderToHardwareTextureAndroid>
@@ -196,7 +206,18 @@ export default class  IdentificationPage extends Component {
                         passProps: {isNeedSkip:false}
                     })
                 }else{
-                    Toast.show('已认证', {position: Toast.positions.CENTER});
+                    Storage.get('isrealauthnm').then((value) => {
+                        if(value){
+                            if(value=='认证成功'){
+                                Toast.show('已认证', {position: Toast.positions.CENTER});
+                            }else{
+                                Toast.show('申请认证中，请等待审核完成', {position: Toast.positions.CENTER});
+                            }
+                        }else{
+
+                            Toast.show('审核中', {position: Toast.positions.CENTER});
+                        }
+                    });
                 }
             });
 
@@ -209,7 +230,18 @@ export default class  IdentificationPage extends Component {
                         passProps: {isNeedSkip:false}
                     })
                 }else{
-                    Toast.show('已认证', {position: Toast.positions.CENTER});
+                    Storage.get('iseducauthnm').then((value) => {
+                        if(value){
+                            if(value=='认证成功'){
+                                Toast.show('已认证', {position: Toast.positions.CENTER});
+                            }else{
+                                Toast.show('申请认证中，请等待审核完成', {position: Toast.positions.CENTER});
+                            }
+                        }else{
+
+                            Toast.show('审核中', {position: Toast.positions.CENTER});
+                        }
+                    });
                 }
             });
 
@@ -222,7 +254,18 @@ export default class  IdentificationPage extends Component {
                         passProps: {isNeedSkip:false}
                     })
                 }else{
-                    Toast.show('已认证', {position: Toast.positions.CENTER});
+                    Storage.get('isworkauthnm').then((value) => {
+                        if(value){
+                            if(value=='认证成功'){
+                                Toast.show('已认证', {position: Toast.positions.CENTER});
+                            }else{
+                                Toast.show('申请认证中，请等待审核完成', {position: Toast.positions.CENTER});
+                            }
+                        }else{
+
+                            Toast.show('审核中', {position: Toast.positions.CENTER});
+                        }
+                    });
                 }
             });
 
@@ -235,20 +278,44 @@ export default class  IdentificationPage extends Component {
                         passProps: {isNeedSkip:false}
                     })
                 }else{
-                    Toast.show('已认证', {position: Toast.positions.CENTER});
+                    Storage.get('isphoneauthnm').then((value) => {
+                        if(value){
+                            if(value=='认证成功'){
+                                Toast.show('已认证', {position: Toast.positions.CENTER});
+                            }else{
+                                Toast.show('申请认证中，请等待审核完成', {position: Toast.positions.CENTER});
+                            }
+                        }else{
+
+                            Toast.show('审核中', {position: Toast.positions.CENTER});
+                        }
+                    });
                 }
             });
 
         }else if(content=="联系人认证"){
             Storage.get('contact').then((value) => {
                 if(!value){
+                    console.log('联系人认证: value=' + value);
                     this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
                         name:'CheckContactContainer',
                         component: CheckContactContainer,
                         passProps: {isNeedSkip:false}
                     })
                 }else{
-                    Toast.show('已认证', {position: Toast.positions.CENTER});
+                    Storage.get('islinkauthnm').then((value) => {
+                        if(value){
+                            if(value=='认证成功'){
+                                Toast.show('已认证', {position: Toast.positions.CENTER});
+                            }else{
+                                Toast.show('申请认证中，请等待审核完成', {position: Toast.positions.CENTER});
+                            }
+                        }else{
+
+                            Toast.show('审核中', {position: Toast.positions.CENTER});
+                        }
+                    });
+
                 }
             });
         }

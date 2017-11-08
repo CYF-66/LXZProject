@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {
     StyleSheet,
     View,
-    Image,
+    Modal,
     Text,
     TouchableHighlight,
     Animated,
@@ -43,6 +43,7 @@ export default class AlertSelected extends Component {
             return (<View />)
         } else {
             return (
+                <Modal visible={true} transparent={true}>
                 <View style={styles.container}>
                     <Animated.View style={styles.mask}>
                     </Animated.View>
@@ -55,6 +56,9 @@ export default class AlertSelected extends Component {
                             ios:{
                                 bottom: - 20,
                             },
+                            android:{
+                                bottom: 10,
+                            }
                         }),
                         alignItems: "center",
                         justifyContent: "space-between",
@@ -83,6 +87,7 @@ export default class AlertSelected extends Component {
                         </TouchableHighlight>
                     </Animated.View>
                 </View>
+                </Modal>
             );
         }
     }
@@ -203,16 +208,17 @@ export default class AlertSelected extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    container1: {
         position: "absolute",
         width: width,
         height: height,
         left: left,
         top: top,
+        backgroundColor: "rgba(0, 0, 0, 0)",
     },
     mask: {
         justifyContent: "center",
-        backgroundColor: "#000000",
+        backgroundColor: "rgba(0, 0, 0, 2)",
         opacity: 0.3,
         position: "absolute",
         width: width,

@@ -80,9 +80,13 @@ export const CHECKSCHOOLRECEIVED                  = 'check_school_received';
 export const CHECKWORK                  = 'check_work';
 export const CHECKWORKRECEIVED                  = 'check_work_received';
 
-//工作认证
+//联系人认证
 export const CHECKCONTACT                  = 'check_contact';
 export const CHECKCONTACTRECEIVED                  = 'check_contact_received';
+
+//获取用户信息
+export const GETUSERINFO                  = 'user_info';
+export const GETUSERINFORECEIVED                  = 'user_info_received';
 
 
 

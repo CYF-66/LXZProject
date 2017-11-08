@@ -6,8 +6,8 @@ import Swiper from 'react-native-swiper';
 import Common from '../util/constants';
 import Toast from 'react-native-root-toast';
 
-const Images = [{src: require('../images/banner/banner5.jpg')}, {src: require('../images/banner/banner6.jpg')},
-    {src: require('../images/banner/banner7.jpg')}, {src: require('../images/banner/banner4.jpg')}]
+const Images = [{src: require('../images/banner/banner8.jpg')}, {src: require('../images/banner/banner9.jpg')}];
+
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' +
     'Cmd+D or shake for dev menu',
@@ -155,20 +155,20 @@ export default class HomePage extends Component {
                         <Image style={styles.img} source={Images[1].src}></Image>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.swiperItem}>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        onPress={() => this._skipIntoAccountManage("图片3")}>
-                        <Image style={styles.img} source={Images[2].src}></Image>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.swiperItem}>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        onPress={() => this._skipIntoAccountManage("图片4")}>
-                        <Image style={styles.img} source={Images[3].src}></Image>
-                    </TouchableOpacity>
-                </View>
+                {/*<View style={styles.swiperItem}>*/}
+                    {/*<TouchableOpacity*/}
+                        {/*activeOpacity={1}*/}
+                        {/*onPress={() => this._skipIntoAccountManage("图片3")}>*/}
+                        {/*<Image style={styles.img} source={Images[2].src}></Image>*/}
+                    {/*</TouchableOpacity>*/}
+                {/*</View>*/}
+                {/*<View style={styles.swiperItem}>*/}
+                    {/*<TouchableOpacity*/}
+                        {/*activeOpacity={1}*/}
+                        {/*onPress={() => this._skipIntoAccountManage("图片4")}>*/}
+                        {/*<Image style={styles.img} source={Images[3].src}></Image>*/}
+                    {/*</TouchableOpacity>*/}
+                {/*</View>*/}
             </Swiper>
         )
     }
@@ -215,13 +215,13 @@ export default class HomePage extends Component {
         // console.log('data===------------>'+data.deadprice);
 
         return (
-            <View>
+            <View style={styles.container}>
             <ScrollView
                 // iosalwaysBounceVertical={false}
                 automaticallyAdjustContentInsets={true}
                 // bounces={false}
                 // iosbounces={false}
-                style={styles.container}>
+                style={styles.container1}>
                 {this._renderSwiper()}
                 <View style={{flex:1,position:'absolute',top:25,right:15}}>
                     <TouchableOpacity
@@ -506,6 +506,10 @@ export default class HomePage extends Component {
 }
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        backgroundColor: Common.colors.gray6,
+    },
+    container1: {
         flex: 1,
         backgroundColor: Common.colors.gray6,
     },

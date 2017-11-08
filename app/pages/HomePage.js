@@ -215,6 +215,7 @@ export default class HomePage extends Component {
         // console.log('data===------------>'+data.deadprice);
 
         return (
+            <View>
             <ScrollView
                 // iosalwaysBounceVertical={false}
                 automaticallyAdjustContentInsets={true}
@@ -310,6 +311,7 @@ export default class HomePage extends Component {
                     size={'large'}
                 />
             </ScrollView>
+            </View>
         );
     }
 

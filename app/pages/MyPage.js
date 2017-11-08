@@ -161,6 +161,7 @@ export default class MyPage extends Component {
     render() {
         console.log('image.path='+this.state.avatarSource);
         return (
+            <View>
             <ScrollView
                 automaticallyAdjustContentInsets={true}
                 // bounces={false}
@@ -388,6 +389,7 @@ export default class MyPage extends Component {
                 }} />
 
             </ScrollView>
+            </View>
         )
     }
 

@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     Text,
     StyleSheet,
-    InteractionManager
+    StatusBar
 } from 'react-native'
 //引入标题支持包
 // import SetPage from 'SetPage'
@@ -162,6 +162,10 @@ export default class MyPage extends Component {
         console.log('image.path='+this.state.avatarSource);
         return (
             <View style={styles.container2}>
+                <StatusBar
+                    hidden={true}
+                    animated={false}
+                />
             <ScrollView
                 automaticallyAdjustContentInsets={true}
                 // bounces={false}
@@ -541,7 +545,6 @@ export default class MyPage extends Component {
 const styles = StyleSheet.create({
     container1: {
         backgroundColor: Common.colors.gray6,
-        paddingTop:20
     },
     container2: {
         flex: 1,

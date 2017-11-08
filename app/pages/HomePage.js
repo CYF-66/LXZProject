@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import {View, Platform, Text, StyleSheet, Image, TouchableOpacity, ScrollView, InteractionManager,ListView,RefreshControl,
-    BackHandler} from 'react-native'
+    BackHandler,StatusBar} from 'react-native'
 import Swiper from 'react-native-swiper';
 import Common from '../util/constants';
 import Toast from 'react-native-root-toast';
@@ -216,6 +216,10 @@ export default class HomePage extends Component {
 
         return (
             <View style={styles.container2}>
+                <StatusBar
+                    hidden={true}
+                    animated={false}
+                />
             <ScrollView
                 // iosalwaysBounceVertical={false}
                 automaticallyAdjustContentInsets={true}
@@ -511,7 +515,6 @@ const styles = StyleSheet.create({
     },
     container1: {
         backgroundColor: Common.colors.gray6,
-        paddingTop:20
     },
     swiperItem: {
         flex: 1,

@@ -216,12 +216,12 @@ export default class HomePage extends Component {
 
         return (
             <View style={styles.container2}>
-                <StatusBar
-                    hidden={false}
-                    animated={false}
-                    barStyle={'light-content'}
-                    translucent={true}
-                />
+                {/*<StatusBar*/}
+                    {/*hidden={false}*/}
+                    {/*animated={false}*/}
+                    {/*barStyle={'light-content'}*/}
+                    {/*translucent={true}*/}
+                {/*/>*/}
             <ScrollView
                 // iosalwaysBounceVertical={false}
                 automaticallyAdjustContentInsets={false}

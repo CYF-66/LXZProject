@@ -544,6 +544,7 @@ const styles = StyleSheet.create({
         backgroundColor: Common.colors.gray6,
     },
     container2: {
+        flex:1,
         backgroundColor: Common.colors.gray6,
     },
     account: {

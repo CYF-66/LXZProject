@@ -163,7 +163,7 @@ export default class MyPage extends Component {
         return (
             <ScrollView
                 automaticallyAdjustContentInsets={true}
-                bounces={false}
+                // bounces={false}
                 // iosalwaysBounceVertical={false}
                 // iosbounces={false}
                 style={styles.container1}>

@@ -218,7 +218,7 @@ export default class HomePage extends Component {
             <ScrollView
                 // iosalwaysBounceVertical={false}
                 automaticallyAdjustContentInsets={true}
-                bounces={false}
+                // bounces={false}
                 // iosbounces={false}
                 style={styles.container}>
                 {this._renderSwiper()}

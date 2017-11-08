@@ -104,10 +104,14 @@ export default class OrderPage extends Component {
                             right: 0,
                             justifyContent: 'center',
                             alignItems:'center'}}>
+                            <TouchableOpacity
+                                activeOpacity={0.9}
+                                onPress={() => this. _onRefresh()}>
                             <Image source={require('../images/order/icon_empty.png')} style={{
                                 justifyContent: 'center',
                                 alignItems:'center'
                             }}/>
+                            </TouchableOpacity>
                         </View>
                     </View> :
                     <View style={{flex: 1, flexDirection: 'column'}}>
@@ -155,13 +159,13 @@ export default class OrderPage extends Component {
                     // }}
                 />
                 {content}
-                <Load
-                    transparent={true}
-                    visible={isLoading}
-                    color={Common.colors.loadblue}
-                    overlayColor={Common.colors.transparent}
-                    size={'large'}
-                />
+                {/*<Load*/}
+                    {/*transparent={true}*/}
+                    {/*visible={isLoading}*/}
+                    {/*color={Common.colors.loadblue}*/}
+                    {/*overlayColor={Common.colors.transparent}*/}
+                    {/*size={'large'}*/}
+                {/*/>*/}
             </View>
         )
     }

@@ -179,8 +179,6 @@ export default class MyPage extends Component {
                             activeOpacity={0.5}
                             onPress={() => this._clickIcon()}>
                         <Image source={this.state.avatarSource} style={{
-                            width: 60,
-                            height: 60,
                             borderRadius:50
                         }}/>
                         </TouchableOpacity>

@@ -513,7 +513,6 @@ export default class HomePage extends Component {
 }
 const styles = StyleSheet.create({
     container2: {
-        flex: 1,
         backgroundColor: Common.colors.yellow3,
     },
     container1: {

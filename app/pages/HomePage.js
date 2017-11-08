@@ -227,7 +227,7 @@ export default class HomePage extends Component {
                 automaticallyAdjustContentInsets={false}
                 // bounces={false}
                 // iosbounces={false}
-                style={styles.container1}>
+                >
                 {this._renderSwiper()}
                 <View style={{flex:1,position:'absolute',top:25,right:15}}>
                     <TouchableOpacity

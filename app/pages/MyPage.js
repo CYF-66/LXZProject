@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {
     View,
     ScrollView,
-    RefreshControl,
+    Platform,
     Image,
     TouchableOpacity,
     Text,
@@ -28,6 +28,12 @@ import CustomServicePage from '../pages/CustomServicePage'
 import AboutPage from '../pages/AboutPage'
 // import Demo from '../pages/Demo'
 const selectedArr = ["拍照", "相册"];
+const instructions = Platform.select({
+    ios: 'Press Cmd+R to reload,\n' +
+    'Cmd+D or shake for dev menu',
+    android: 'Double tap R on your keyboard to reload,\n' +
+    'Shake or press menu button for dev menu',
+});
 export default class MyPage extends Component {
 
     constructor(props) {
@@ -157,7 +163,8 @@ export default class MyPage extends Component {
         return (
             <ScrollView
                 iosautomaticallyAdjustContentInsets={false}
-                style={styles.container}>
+                iosalwaysBounceVertical={false}
+                style={styles.container1}>
                 <Image source={require('../images/set/icon_top.jpg')} style={{
                     backgroundColor: Common.colors.bluelogin,
                     height: 200,
@@ -528,9 +535,7 @@ export default class MyPage extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        position: 'absolute',
+    container1: {
         backgroundColor: Common.colors.gray6,
     },
     account: {

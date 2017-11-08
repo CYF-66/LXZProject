@@ -116,6 +116,7 @@ export default class MyPage extends Component {
             }}>
                 <Text style={{
                     marginLeft: 10,
+                    backgroundColor:Common.colors.transparent,
                     color: Common.colors.white,
                     fontSize: 15,
                     marginTop:20,

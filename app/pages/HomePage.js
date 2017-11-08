@@ -217,8 +217,9 @@ export default class HomePage extends Component {
         return (
             <View style={styles.container2}>
                 <StatusBar
-                    hidden={true}
+                    hidden={false}
                     animated={false}
+                    barStyle={'light-content'}
                 />
             <ScrollView
                 // iosalwaysBounceVertical={false}
@@ -511,7 +512,7 @@ export default class HomePage extends Component {
 const styles = StyleSheet.create({
     container2: {
         flex: 1,
-        backgroundColor: Common.colors.gray6,
+        backgroundColor: Common.colors.yellow3,
     },
     container1: {
         backgroundColor: Common.colors.gray6,

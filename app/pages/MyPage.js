@@ -163,7 +163,7 @@ export default class MyPage extends Component {
         return (
             <View style={styles.container2}>
                 <StatusBar
-                    hidden={true}
+                    hidden={false}
                     animated={false}
                 />
             <ScrollView

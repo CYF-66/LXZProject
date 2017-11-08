@@ -574,7 +574,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         paddingTop: 15,
         alignItems: 'center',
-        paddingBottom: 5,
+        paddingBottom: 15,
         paddingLeft: 20,
         borderBottomColor: Common.colors.bottomlinecolor,
         borderBottomWidth: 1

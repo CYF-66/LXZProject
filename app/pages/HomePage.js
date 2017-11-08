@@ -225,7 +225,6 @@ export default class HomePage extends Component {
             <ScrollView
                 // iosalwaysBounceVertical={false}
                 automaticallyAdjustContentInsets={false}
-                ioscontentOffset={0,0,0,0}
                 // bounces={false}
                 // iosbounces={false}
                 >
@@ -517,6 +516,7 @@ const styles = StyleSheet.create({
     },
     container1: {
         backgroundColor: Common.colors.gray6,
+        flex:1
     },
     swiperItem: {
         flex: 1,

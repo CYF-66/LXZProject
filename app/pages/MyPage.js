@@ -162,16 +162,7 @@ export default class MyPage extends Component {
         console.log('image.path='+this.state.avatarSource);
         return (
             <View style={styles.container2}>
-                <StatusBar
-                    hidden={false}
-                    animated={false}
-                />
-            <ScrollView
-                automaticallyAdjustContentInsets={true}
-                // bounces={false}
-                // iosalwaysBounceVertical={false}
-                // iosbounces={false}
-                style={styles.container1}>
+
                 <Image source={require('../images/set/icon_top.jpg')} style={{
                     backgroundColor: Common.colors.bluelogin,
                     height: 200,
@@ -238,6 +229,12 @@ export default class MyPage extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <ScrollView
+                    automaticallyAdjustContentInsets={true}
+                    // bounces={false}
+                    // iosalwaysBounceVertical={false}
+                    // iosbounces={false}
+                    style={styles.container1}>
                 <TouchableOpacity
                     activeOpacity={0.5}
                     onPress={() => this._skipIntoAccountManage("我的优惠券")}>

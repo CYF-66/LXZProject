@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 //引入标题支持包
 // import SetPage from 'SetPage'
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-crop-picker'; 
 import Common from '../util/constants';
 import Toast from 'react-native-root-toast';
 import IdentificationContainer from '../containers/IdentificationContainer'
@@ -180,9 +180,7 @@ export default class MyPage extends Component {
                             activeOpacity={0.5}
                             onPress={() => this._clickIcon()}>
                         <Image source={this.state.avatarSource} style={{
-                            width:80,
-                            height:80,
-                            borderRadius:50
+                            borderRadius:10
                         }}/>
                         </TouchableOpacity>
                         {this.state.isLogin ? this._renderAfterLogin() : this._renderBeforeLogin()}

@@ -156,6 +156,7 @@ export default class MyPage extends Component {
         console.log('image.path='+this.state.avatarSource);
         return (
             <ScrollView
+                iosautomaticallyAdjustContentInsets={false}
                 style={styles.container}>
                 <Image source={require('../images/set/icon_top.jpg')} style={{
                     backgroundColor: Common.colors.bluelogin,
@@ -529,6 +530,7 @@ export default class MyPage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        position: 'absolute',
         backgroundColor: Common.colors.gray6,
     },
     account: {

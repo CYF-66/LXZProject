@@ -224,7 +224,7 @@ export default class HomePage extends Component {
                 />
             <ScrollView
                 // iosalwaysBounceVertical={false}
-                automaticallyAdjustContentInsets={true}
+                automaticallyAdjustContentInsets={false}
                 // bounces={false}
                 // iosbounces={false}
                 style={styles.container1}>

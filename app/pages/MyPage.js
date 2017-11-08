@@ -541,11 +541,11 @@ export default class MyPage extends Component {
 const styles = StyleSheet.create({
     container1: {
         backgroundColor: Common.colors.gray6,
+        paddingTop:20
     },
     container2: {
         flex: 1,
         backgroundColor: Common.colors.gray6,
-        paddingTop:20
     },
     account: {
         paddingTop: 5,

@@ -508,10 +508,10 @@ const styles = StyleSheet.create({
     container2: {
         flex: 1,
         backgroundColor: Common.colors.gray6,
-        paddingTop:20
     },
     container1: {
         backgroundColor: Common.colors.gray6,
+        paddingTop:20
     },
     swiperItem: {
         flex: 1,

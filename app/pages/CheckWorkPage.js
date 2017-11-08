@@ -113,8 +113,8 @@ export default class CheckWorkPage extends Component {
                                                textAlignVertical: 'center',}}
                                            dropdownStyle={{ marginTop:0,borderColor: Common.colors.gray1,
                                                borderWidth: 1,
-                                               borderRadius: 3,}}
-                                           dropdownTextStyle={{fontSize: 12,color:Common.colors.black}}
+                                               borderRadius: 3,width: 100,}}
+                                           dropdownTextStyle={{fontSize: 12,color:Common.colors.black,textAlign:'center'}}
                                            dropdownTextHighlightStyle={{fontSize: 12,color:Common.colors.red}}
                                            onSelect={(idx, value) => this._dropdown_1_onSelect(idx, value)}
                                            options={WORK_YEAR_OPTIONS}
@@ -146,9 +146,9 @@ export default class CheckWorkPage extends Component {
                                                textAlignVertical: 'center',}}
                                            dropdownStyle={{ marginTop:0,borderColor: Common.colors.gray1,
                                                borderWidth: 1,
-                                               borderRadius: 3,width: 80,
+                                               borderRadius: 3,width: 100,
                                                height: 120}}
-                                           dropdownTextStyle={{fontSize: 12,color:Common.colors.black}}
+                                           dropdownTextStyle={{fontSize: 12,color:Common.colors.black,textAlign:'center'}}
                                            dropdownTextHighlightStyle={{fontSize: 12,color:Common.colors.red}}
                                            onSelect={(idx, value) => this._dropdown_2_onSelect(idx, value)}
                                            options={WORK_STATE_OPTIONS}
@@ -232,8 +232,8 @@ export default class CheckWorkPage extends Component {
                                                textAlignVertical: 'center',}}
                                            dropdownStyle={{ marginTop:0,borderColor: Common.colors.gray1,
                                                borderWidth: 1,
-                                               borderRadius: 3,}}
-                                           dropdownTextStyle={{fontSize: 12,color:Common.colors.black}}
+                                               borderRadius: 3,width: 100,}}
+                                           dropdownTextStyle={{fontSize: 12,color:Common.colors.black,textAlign:'center'}}
                                            dropdownTextHighlightStyle={{fontSize: 12,color:Common.colors.red}}
                                            onSelect={(idx, value) => this._dropdown_3_onSelect(idx, value)}
                                            options={COMPANY_SORT_OPTIONS}
@@ -260,8 +260,8 @@ export default class CheckWorkPage extends Component {
                                                textAlignVertical: 'center',}}
                                            dropdownStyle={{ marginTop:0,borderColor: Common.colors.gray1,
                                                borderWidth: 1,
-                                               borderRadius: 3,}}
-                                           dropdownTextStyle={{fontSize: 12,color:Common.colors.black}}
+                                               borderRadius: 3,width: 100,}}
+                                           dropdownTextStyle={{fontSize: 12,color:Common.colors.black,textAlign:'center'}}
                                            dropdownTextHighlightStyle={{fontSize: 12,color:Common.colors.red}}
                                            onSelect={(idx, value) => this._dropdown_4_onSelect(idx, value)}
                                            options={JOB_OPTIONS}
@@ -288,8 +288,8 @@ export default class CheckWorkPage extends Component {
                                                textAlignVertical: 'center',}}
                                            dropdownStyle={{ marginTop:0,borderColor: Common.colors.gray1,
                                                borderWidth: 1,
-                                               borderRadius: 3,}}
-                                           dropdownTextStyle={{fontSize: 12,color:Common.colors.black}}
+                                               borderRadius: 3,width: 100,}}
+                                           dropdownTextStyle={{fontSize: 12,color:Common.colors.black,textAlign:'center'}}
                                            dropdownTextHighlightStyle={{fontSize: 12,color:Common.colors.red}}
                                            onSelect={(idx, value) => this._dropdown_5_onSelect(idx, value)}
                                            options={INCOME_OPTIONS}

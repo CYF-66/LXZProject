@@ -3,7 +3,7 @@
  * @author CYF
  * @date 2017-10-23
  */
-
+import LoginContainer from '../containers/LoginContainer'
 import * as types from './actionTypes';
 import Util from '../util/utils';
 import * as urls from '../util/constants_url';
@@ -19,13 +19,20 @@ export let GetOrderList = (data,isLoading,isRefreshing,isLoadMore) => {
             (Code, Message, Data) => {
 
             if(Code==1){
-                Toast.show(Message
-                    , {position:Toast.positions.CENTER});
+                if(Data==''){
+                    Toast.show(Message
+                        , {position:Toast.positions.CENTER});
+                }
                 dispatch({type: types.MYORDERRECEIVED, Code: Code, Message: Message, Data: Data});
             }else if(Code==2){//token 失效
                 Toast.show("登录验证失败，请重新登录"
                     , {position:Toast.positions.CENTER});
-                dispatch({'type': types.TOKENERROR});
+                // this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                //     name:'LoginContainer',
+                //     component: LoginContainer,
+                //     // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+                // });
+                dispatch({'type': types.TOKENERROR,Code: Code});
             }else{
 
             }

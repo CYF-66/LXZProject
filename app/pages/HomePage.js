@@ -155,20 +155,6 @@ export default class HomePage extends Component {
                         <Image style={styles.img} source={Images[1].src}></Image>
                     </TouchableOpacity>
                 </View>
-                {/*<View style={styles.swiperItem}>*/}
-                    {/*<TouchableOpacity*/}
-                        {/*activeOpacity={1}*/}
-                        {/*onPress={() => this._skipIntoAccountManage("图片3")}>*/}
-                        {/*<Image style={styles.img} source={Images[2].src}></Image>*/}
-                    {/*</TouchableOpacity>*/}
-                {/*</View>*/}
-                {/*<View style={styles.swiperItem}>*/}
-                    {/*<TouchableOpacity*/}
-                        {/*activeOpacity={1}*/}
-                        {/*onPress={() => this._skipIntoAccountManage("图片4")}>*/}
-                        {/*<Image style={styles.img} source={Images[3].src}></Image>*/}
-                    {/*</TouchableOpacity>*/}
-                {/*</View>*/}
             </Swiper>
         )
     }
@@ -432,11 +418,21 @@ export default class HomePage extends Component {
         // Toast.show(content, {position: Toast.positions.CENTER});
     }
     _clickMessage(content){
-        this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
-            name:'MessageContainer',
-            component: MessageContainer,
-            // passProps: {product_id:product_id}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
-        })
+        Storage.get("isLogin").then((value) => {
+            if(value){
+                this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                    name:'MessageContainer',
+                    component: MessageContainer,
+                    // passProps: {product_id:product_id}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+                })
+            }else{
+                this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                    name:'LoginContainer',
+                    component: LoginContainer,
+                    // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+                });
+            }
+        });
     }
     _takeOrder(){
         Storage.get("isLogin").then((value) => {

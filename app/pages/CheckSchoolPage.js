@@ -200,7 +200,7 @@ export default class CheckSchoolPage extends Component {
                         // defaultValue={this.state.accountPWD.substring(1,this.state.accountPWD.length-1)}
                         keyboardType={'default'}
                         secureTextEntry={false}
-                        placeholder=''
+                        placeholder='2017-11-8'
                         underlineColorAndroid={'transparent'}
                         onChangeText={this.onChangeStartTime.bind(this)}/>
                 </View>
@@ -566,7 +566,7 @@ export default class CheckSchoolPage extends Component {
                         // defaultValue={this.state.accountPWD.substring(1,this.state.accountPWD.length-1)}
                         keyboardType={'default'}
                         secureTextEntry={false}
-                        placeholder=''
+                        placeholder='2017-11-8'
                         underlineColorAndroid={'transparent'}
                         onChangeText={this.onChangeLoginOutDate.bind(this)}/>
                 </View>

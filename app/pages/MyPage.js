@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     Text,
     StyleSheet,
-    StatusBar
+    InteractionManager
 } from 'react-native'
 //引入标题支持包
 // import SetPage from 'SetPage'
@@ -26,6 +26,7 @@ import DialogSelected from '../components/alertSelected';
 import WebViewPage from '../pages/WebViewPage'
 import CustomServicePage from '../pages/CustomServicePage'
 import AboutPage from '../pages/AboutPage'
+import {GetUserInfo} from '../actions/myActions'
 // import Demo from '../pages/Demo'
 const selectedArr = ["拍照", "相册"];
 const instructions = Platform.select({
@@ -45,7 +46,7 @@ export default class MyPage extends Component {
             name:'',
             username:'',
             user:{},
-            avatarSource: require('../images/set/personicon.png')
+            avatarSource: ''
         })
         this.showAlertSelected = this.showAlertSelected.bind(this);
         this.callbackSelected = this.callbackSelected.bind(this);
@@ -74,15 +75,6 @@ export default class MyPage extends Component {
             })
         });
     }
-    // shouldComponentUpdate(){
-    //     console.log('shouldComponentUpdate===------------>');
-    // }
-    // componentWillUpdate(){
-    //     console.log('componentWillUpdate===------------>');
-    // }
-    // componentDidUpdate(){
-    //     console.log('componentDidUpdate===------------>');
-    // }
     componentWillMount() {
         // console.log('componentWillMount===------------>');
         Storage.get("isLogin").then((value) => {
@@ -103,6 +95,19 @@ export default class MyPage extends Component {
                 username: value
             })
         });
+        Storage.get("iconimage").then((value) => {
+            if(value){
+                this.setState({
+                    avatarSource: {uri:value}
+                })
+                // console.log('value===------------>'+value);
+            }else{
+                this.setState({
+                    avatarSource: require('../images/set/personicon.png')
+                })
+            }
+
+        });
 
     }
 
@@ -115,7 +120,7 @@ export default class MyPage extends Component {
                 paddingBottom: 5,
             }}>
                 <Text style={{
-                    marginLeft: 10,
+                    marginLeft: 5,
                     backgroundColor:Common.colors.transparent,
                     color: Common.colors.white,
                     fontSize: 15,
@@ -142,13 +147,13 @@ export default class MyPage extends Component {
                 <Text style={{
                     textAlign:'center',
                     width:100,
+                    marginLeft:5,
                     backgroundColor:Common.colors.bluelogin,
                     paddingLeft:10,paddingRight:10,paddingTop:5,paddingBottom:5,
-                    marginLeft: 10,
                     color: Common.colors.white,
                     fontSize: 15,
                     alignItems: 'center',
-                    marginTop: 10,
+                    marginTop: 20,
                     borderRadius:10
                 }}>
                     登录
@@ -182,7 +187,7 @@ export default class MyPage extends Component {
                         <Image source={this.state.avatarSource} style={{
                             width:80,
                             height:80,
-                            borderRadius:60
+                            borderRadius:50
                         }}/>
                         </TouchableOpacity>
                         {this.state.isLogin ? this._renderAfterLogin() : this._renderBeforeLogin()}
@@ -433,6 +438,7 @@ export default class MyPage extends Component {
             this.setState({
                 avatarSource: {uri:image.path}
             });
+            Storage.save('iconimage',image.path);
             console.log(image);
         });
 
@@ -447,6 +453,7 @@ export default class MyPage extends Component {
             this.setState({
                 avatarSource: {uri:image.path}
             });
+            Storage.save('iconimage',image.path);
             console.log('图片信息='+JSON.stringify(image));
             console.log('takePhoto--image.path='+image.path);
         });
@@ -463,6 +470,13 @@ export default class MyPage extends Component {
                         // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
                     })// push一个route对象到navigator中
                 }else{
+                    InteractionManager.runAfterInteractions(() => {
+                        const {dispatch} = this.props;
+                        let data={};
+                        console.log('data===------------>'+JSON.stringify(data));
+                        dispatch(GetUserInfo(data));
+                    });
+
                     this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
                         name:'LoginContainer',
                         component: LoginContainer,

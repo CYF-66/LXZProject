@@ -173,8 +173,8 @@ export default class CheckContactPage extends Component {
                                            textAlignVertical: 'center',}}
                                        dropdownStyle={{ marginTop:0,borderColor: Common.colors.gray1,
                                            borderWidth: 1,
-                                           borderRadius: 3,}}
-                                       dropdownTextStyle={{fontSize: 12,color:Common.colors.black}}
+                                           borderRadius: 3,width: 100,}}
+                                       dropdownTextStyle={{fontSize: 12,color:Common.colors.black,textAlign:'center'}}
                                        dropdownTextHighlightStyle={{fontSize: 12,color:Common.colors.red}}
                                        onSelect={(idx, value) => this._dropdown_1_onSelect(idx, value)}
                                        options={ONE_RELATIVE_OPTIONS}
@@ -258,10 +258,10 @@ export default class CheckContactPage extends Component {
                                            color: Common.colors.black,
                                            textAlign: 'center',
                                            textAlignVertical: 'center',}}
-                                       dropdownStyle={{ marginTop:0,borderColor: Common.colors.gray1,
+                                       ddropdownStyle={{ marginTop:0,borderColor: Common.colors.gray1,
                                            borderWidth: 1,
-                                           borderRadius: 3,}}
-                                       dropdownTextStyle={{fontSize: 12,color:Common.colors.black}}
+                                           borderRadius: 3,width: 100,}}
+                                       dropdownTextStyle={{fontSize: 12,color:Common.colors.black,textAlign:'center'}}
                                        dropdownTextHighlightStyle={{fontSize: 12,color:Common.colors.red}}
                                        onSelect={(idx, value) => this._dropdown_2_onSelect(idx, value)}
                                        options={TWO_RELATIVE_OPTIONS}

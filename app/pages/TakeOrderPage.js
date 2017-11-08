@@ -204,17 +204,17 @@ export default class TakeOrderPage extends Component {
                 <View style={{
                     flexDirection: 'row', paddingTop: 30, paddingBottom: 10, borderRadius: 5, alignItems: 'center',
                 }}>
-                    <TouchableOpacity
-                        activeOpacity={0.5}
-                        onPress={() => this._skipIntoAccountManage("同意")}>
-                        <Image source={require('../images/other/icon_seclect.png')}
-                               style={{
-                                   padding: 10, width: 25,
-                                   height: 25,
-                               }}/>
-                    </TouchableOpacity>
+                    {/*<TouchableOpacity*/}
+                        {/*activeOpacity={0.5}*/}
+                        {/*onPress={() => this._skipIntoAccountManage("同意")}>*/}
+                        {/*<Image source={require('../images/other/icon_seclect.png')}*/}
+                               {/*style={{*/}
+                                   {/*padding: 10, width: 25,*/}
+                                   {/*height: 25,*/}
+                               {/*}}/>*/}
+                    {/*</TouchableOpacity>*/}
                     <Text style={{fontSize: 15, color: Common.colors.gray1, marginLeft: 5}}>
-                        同意
+                        借款即同意
                     </Text>
                     <TouchableOpacity
                         activeOpacity={0.9}

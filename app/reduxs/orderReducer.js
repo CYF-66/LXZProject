@@ -7,6 +7,7 @@
 import * as types from '../actions/actionTypes';
 const initialState = {
     takeOrderData:[],
+    code:'',
     orderData:[],
     orderDetailsData:[],
     isLoading: false,
@@ -64,6 +65,9 @@ let orderReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 isTakeOrderSuccess:false,
+                isLoadMore: false,
+                isRefreshing: false,
+                code: action.Code,
             };
         case types.ACTIONERROR:
             return {

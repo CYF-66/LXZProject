@@ -33,6 +33,7 @@ let myReducer = (state = initialState, action) => {
         case types.CHECKCENTER:
             return {
                 ...state,
+                checkData:myReducer.checkData,
                 isLoading: true
             };
         case types.CHECKCENTERRECEIVED:

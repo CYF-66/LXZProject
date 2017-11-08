@@ -24,7 +24,7 @@ import Loading from '../components/Loading';
 import Load from '../components/Load';
 import {CheckCenter} from '../actions/myActions'
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-var isRefreshing=false;
+var isRefreshing=true;
 var isLoadMore=false;
 export default class CheckPage extends Component {
 
@@ -128,13 +128,13 @@ export default class CheckPage extends Component {
                 />
 
                 {content}
-                <Load
-                    transparent={true}
-                    visible={isLoading}
-                    color={Common.colors.loadblue}
-                    overlayColor={Common.colors.transparent}
-                    size={'large'}
-                />
+                {/*<Load*/}
+                    {/*transparent={true}*/}
+                    {/*visible={isLoading}*/}
+                    {/*color={Common.colors.loadblue}*/}
+                    {/*overlayColor={Common.colors.transparent}*/}
+                    {/*size={'large'}*/}
+                {/*/>*/}
             </View>
         )
     }

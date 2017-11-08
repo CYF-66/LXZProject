@@ -164,6 +164,7 @@ export default class MyPage extends Component {
             <ScrollView
                 iosautomaticallyAdjustContentInsets={false}
                 iosalwaysBounceVertical={false}
+                iosbounces={false}
                 style={styles.container1}>
                 <Image source={require('../images/set/icon_top.jpg')} style={{
                     backgroundColor: Common.colors.bluelogin,

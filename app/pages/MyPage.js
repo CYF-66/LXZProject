@@ -180,9 +180,9 @@ export default class MyPage extends Component {
                             activeOpacity={0.5}
                             onPress={() => this._clickIcon()}>
                         <Image source={this.state.avatarSource} style={{
-                            width:80,
-                            height:80,
-                            borderRadius:50
+                            width:60,
+                            height:60,
+                            borderRadius:60
                         }}/>
                         </TouchableOpacity>
                         {this.state.isLogin ? this._renderAfterLogin() : this._renderBeforeLogin()}
@@ -386,11 +386,10 @@ export default class MyPage extends Component {
                         </Text>
                     </View>
                 </TouchableOpacity>
+            </ScrollView>
                 <DialogSelected ref={(dialog)=>{
                     this.dialog = dialog;
                 }} />
-
-            </ScrollView>
             </View>
         )
     }

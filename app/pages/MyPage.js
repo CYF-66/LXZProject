@@ -162,9 +162,10 @@ export default class MyPage extends Component {
         console.log('image.path='+this.state.avatarSource);
         return (
             <ScrollView
-                iosautomaticallyAdjustContentInsets={false}
-                iosalwaysBounceVertical={false}
-                iosbounces={false}
+                iosautomaticallyAdjustContentInsets={true}
+                automaticallyAdjustContentInsets={true}
+                // iosalwaysBounceVertical={false}
+                // iosbounces={false}
                 style={styles.container1}>
                 <Image source={require('../images/set/icon_top.jpg')} style={{
                     backgroundColor: Common.colors.bluelogin,

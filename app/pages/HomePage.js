@@ -215,7 +215,7 @@ export default class HomePage extends Component {
         // console.log('data===------------>'+data.deadprice);
 
         return (
-            <View style={styles.container2}>
+            <View style={styles.container1}>
                 {/*<StatusBar*/}
                     {/*hidden={false}*/}
                     {/*animated={false}*/}

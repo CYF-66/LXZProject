@@ -184,7 +184,7 @@ export default class HomePage extends Component {
         let content;
 
         content=(
-            <View style={styles.container}>
+            <View style={styles.container1}>
                 {isLoading ?
                    null :
                     <View style={{flex: 1, flexDirection: 'column'}}>
@@ -222,12 +222,13 @@ export default class HomePage extends Component {
                     {/*barStyle={'light-content'}*/}
                     {/*translucent={true}*/}
                 {/*/>*/}
-            <ScrollView
-                // iosalwaysBounceVertical={false}
-                automaticallyAdjustContentInsets={false}
-                // bounces={false}
-                // iosbounces={false}
-                >
+            {/*<ScrollView*/}
+                {/*// iosalwaysBounceVertical={false}*/}
+                {/*automaticallyAdjustContentInsets={false}*/}
+                {/*// bounces={false}*/}
+                {/*// iosbounces={false}*/}
+                {/*>*/}
+                <View style={styles.container1}>
                 {this._renderSwiper()}
                 <View style={{flex:1,position:'absolute',top:25,right:15}}>
                     <TouchableOpacity
@@ -239,7 +240,7 @@ export default class HomePage extends Component {
                         }}/>
                     </TouchableOpacity>
                 </View>
-
+                </View>
                 <View style={styles.secondLine}>
                     <View style={{flex: 1}}>
                             <View style={styles.check}>
@@ -268,9 +269,17 @@ export default class HomePage extends Component {
                             </View>
                     </View>
                 </View>
+            {/*</ScrollView>*/}
+
                 <View style={styles.thirdLine}>
                     <Text style={styles.thirdText}>乐享租产品</Text>
                 </View>
+                <ScrollView
+                    // iosalwaysBounceVertical={false}
+                    automaticallyAdjustContentInsets={false}
+                    // bounces={false}
+                    // iosbounces={false}
+                >
                 {content}
                 <View style={{paddingTop: 5, paddingBottom: 15}}>
                     <TouchableOpacity
@@ -531,8 +540,7 @@ const styles = StyleSheet.create({
     swiper: {},
     img: {
         width: Common.window.width,
-        height: 200,
-        resizeMode:'stretch'
+        resizeMode:'contain'
     },
     customDot: {
         backgroundColor: Common.colors.white,

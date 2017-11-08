@@ -215,7 +215,7 @@ export default class HomePage extends Component {
         // console.log('data===------------>'+data.deadprice);
 
         return (
-            <View style={styles.container}>
+            <View style={styles.container2}>
             <ScrollView
                 // iosalwaysBounceVertical={false}
                 automaticallyAdjustContentInsets={true}
@@ -505,12 +505,12 @@ export default class HomePage extends Component {
     }
 }
 const styles = StyleSheet.create({
-    container: {
+    container2: {
         flex: 1,
         backgroundColor: Common.colors.gray6,
+        paddingTop:20
     },
     container1: {
-        flex: 1,
         backgroundColor: Common.colors.gray6,
     },
     swiperItem: {

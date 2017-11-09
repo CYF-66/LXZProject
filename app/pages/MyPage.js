@@ -224,7 +224,7 @@ export default class MyPage extends Component {
                                 alignItems: 'center',
                                 justifyContent: 'center',}}>
 
-                                <Image source={require('../images/set/icon_renzheng.png')} style={{
+                                <Image source={require('../images/set/icon_myrenzheng.png')} style={{
                                 width: 45,
                                 height: 45,
                                 justifyContent: 'center',

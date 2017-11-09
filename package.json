@@ -12,6 +12,7 @@
 		"react-native-deprecated-custom-components": "^0.1.1",
 		"react-native-dialogs-master": "^1.0.6",
 		"react-native-image-crop-picker": "^0.18.1",
+		"react-native-image-picker": "^0.26.7",
 		"react-native-navigationbar": "^0.4.5",
 		"react-native-root-toast": "^2.1.0",
 		"react-native-swiper": "^1.5.13",

@@ -44,6 +44,8 @@ export let GetHomeInfo = (data,isLoading) => {
             (error) => {
                 // console.log('Fetch banner list error: ' + error);
                 dispatch({'type': types.ACTIONERROR});
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 // alert('Android要用外网地址');
             }
         );
@@ -85,6 +87,8 @@ export let GetMessage = (data,isLoading,isRefreshing,isLoadMore) => {
             (error) => {
                 // console.log('Fetch banner list error: ' + error);
                 dispatch({'type': types.ACTIONERROR});
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 // alert('Android要用外网地址');
             }
         );
@@ -123,6 +127,8 @@ _RefreshToken = (data) => {
 
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Fetch banner list error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');

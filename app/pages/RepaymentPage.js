@@ -247,13 +247,13 @@ export default class RepaymentPage extends Component {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                {/*<Load*/}
-                    {/*transparent={true}*/}
-                    {/*visible={isLoading}*/}
-                    {/*color={Common.colors.loadblue}*/}
-                    {/*overlayColor={Common.colors.transparent}*/}
-                    {/*size={'large'}*/}
-                {/*/>*/}
+                <Load
+                    transparent={true}
+                    visible={isLoading}
+                    color={Common.colors.loadblue}
+                    overlayColor={Common.colors.transparent}
+                    size={'large'}
+                />
             </View>
         )
     }

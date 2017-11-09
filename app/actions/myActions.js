@@ -69,6 +69,8 @@ export let HttpLogin = (data,isLoading) => {
                 }
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Fetch banner list error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -120,6 +122,8 @@ export let LoginOut = (data,isLoading) => {
                 dispatch({type: types.LOGINOUTRECEIVED, Code : Code, Message: Message, Data: Data});
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Fetch banner list error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -147,6 +151,8 @@ export let GetCheckNum = () => {
                 dispatch({type: types.GETCHECKNUMRECEIVED, Code : Code, Message: Message, Data: Data});
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('获取验证码token err: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -183,6 +189,8 @@ export let SendYZM = (data) => {
 
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('发送验证码 err: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -217,6 +225,8 @@ export let Register = (data,isLoading) => {
             }
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Register error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -253,6 +263,8 @@ export let CheckCenter = (data,isLoading,isRefreshing,isLoadMore,) => {
             }
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Register error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -288,6 +300,8 @@ export let CheckName = (data,isLoading) => {
             }
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Register error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -322,6 +336,8 @@ export let CheckPhone = (data,isLoading) => {
             }
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Register error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -357,6 +373,8 @@ export let CheckSchool = (data,isLoading) => {
             }
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Register error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -392,6 +410,8 @@ export let CheckWork = (data,isLoading) => {
             }
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Register error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -427,6 +447,8 @@ export let CheckContact = (data,isLoading) => {
             }
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Register error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -492,7 +514,9 @@ export let GetUserInfo = (data) => {
             }
             },
             (err) => {
-                console.log('Register error: ' + err);
+                // console.log('Register error: ' + err);
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
             }

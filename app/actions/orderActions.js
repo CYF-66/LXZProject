@@ -39,6 +39,8 @@ export let GetOrderList = (data,isLoading,isRefreshing,isLoadMore) => {
 
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Fetch banner list error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -80,6 +82,8 @@ export let GetOrderDetail = (data,isLoading,isRefreshing,isLoadMore) => {
 
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Fetch banner list error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -112,6 +116,8 @@ export let TakeOrder = (data,isLoading) => {
 
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Fetch banner list error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');
@@ -150,6 +156,8 @@ export let TakeOrder = (data,isLoading) => {
 
             },
             (err) => {
+                Toast.show(err
+                    , {position:Toast.positions.CENTER});
                 console.log('Fetch banner list error: ' + err);
                 dispatch({'type': types.ACTIONERROR});
                 // alert('Android要用外网地址');

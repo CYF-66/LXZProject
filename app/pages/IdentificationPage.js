@@ -29,14 +29,79 @@ export default class  IdentificationPage extends Component {
         this.state = ({
             isError: false,
             isLoading: true,
+            isNameIdentiy:false,
+            isSchoolIdentiy:false,
+            isWorkIdentiy:false,
+            isPhoneIdentiy:false,
+            isContackIdentiy:false,
 
         })
+    }
+    componentWillUpdate() {
+        InteractionManager.runAfterInteractions(() => {
+            const {myReducer} = this.props;
+            console.log('myReducer.isGetUserInfo===------------>'+myReducer.isGetUserInfo);
+            if (myReducer.isGetUserInfo) {
+                myReducer.isGetUserInfo=false;
+                Storage.get('name').then((value) => {
+                    this.setState({
+                        isNameIdentiy:value,
+                    })
+                });
+                Storage.get('school').then((value) => {
+                    this.setState({
+                        isSchoolIdentiy:value,
+                    })
+                });
+                Storage.get('work').then((value) => {
+                    this.setState({
+                        isWorkIdentiy:value,
+                    })
+                });
+                Storage.get('phone').then((value) => {
+                    this.setState({
+                        isPhoneIdentiy:value,
+                    })
+                });
+                Storage.get('contact').then((value) => {
+                    this.setState({
+                        isContackIdentiy:value,
+                    })
+                });
+            }
+        });
+
     }
 
     componentWillMount() {
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        Storage.get('name').then((value) => {
+            this.setState({
+                isNameIdentiy:value,
+            })
+        });
+        Storage.get('school').then((value) => {
+            this.setState({
+                isSchoolIdentiy:value,
+            })
+        });
+        Storage.get('work').then((value) => {
+            this.setState({
+                isWorkIdentiy:value,
+            })
+        });
+        Storage.get('phone').then((value) => {
+            this.setState({
+                isPhoneIdentiy:value,
+            })
+        });
+        Storage.get('contact').then((value) => {
+            this.setState({
+                isContackIdentiy:value,
+            })
+        });
     }
 
     componentWillUnmount() {
@@ -64,6 +129,36 @@ export default class  IdentificationPage extends Component {
         });
     }
     render() {
+        let pic1='';
+        let pic2='';
+        let pic3='';
+        let pic4='';
+        let pic5='';
+        if(this.state.isNameIdentiy){
+            pic1=require('../images/set/icon_renzheng_succeed.png');
+        }else{
+            pic1=require('../images/set/icon_renzheng.png');
+        }
+        if(this.state.isSchoolIdentiy){
+            pic2=require('../images/set/icon_xueli_succeed.png');
+        }else{
+            pic2=require('../images/set/icon_xueli.png');
+        }
+        if(this.state.isWorkIdentiy){
+            pic3=require('../images/set/icon_work_succeed.png');
+        }else{
+            pic3=require('../images/set/icon_work.png');
+        }
+        if(this.state.isPhoneIdentiy){
+            pic4=require('../images/set/icon_phone_succeed.png');
+        }else{
+            pic4=require('../images/set/icon_phone.png');
+        }
+        if(this.state.isContackIdentiy){
+            pic5=require('../images/set/icon_contack_succeed.png');
+        }else{
+            pic5=require('../images/set/icon_contack.png');
+        }
         return (
             <View style={styles.container} needsOffscreenAlphaCompositing renderToHardwareTextureAndroid>
                 <NavigationBar
@@ -112,7 +207,7 @@ export default class  IdentificationPage extends Component {
                         onPress={() => this._skipIntoAccountManage("实名认证")}>
                         <View style={styles.secondLineItem}>
 
-                            <Image source={require('../images/set/icon_renzheng.png')} style={{
+                            <Image source={pic1} style={{
                                 width: 40,
                                 height: 40,
                                 justifyContent: 'center',
@@ -127,7 +222,7 @@ export default class  IdentificationPage extends Component {
                         activeOpacity={0.5}
                         onPress={() => this._skipIntoAccountManage("学历认证")}>
                         <View style={styles.secondLineItem}>
-                            <Image source={require('../images/set/icon_xueli.png')} style={{
+                            <Image source={pic2} style={{
                                 width: 40,
                                 height: 40,
                                 justifyContent: 'center',
@@ -144,7 +239,7 @@ export default class  IdentificationPage extends Component {
                         onPress={() => this._skipIntoAccountManage("工作信息")}>
                         <View style={styles.secondLineItem}>
 
-                            <Image source={require('../images/set/icon_work.png')} style={{
+                            <Image source={pic3} style={{
                                 width: 40,
                                 height: 40,
                                 justifyContent: 'center',
@@ -162,7 +257,7 @@ export default class  IdentificationPage extends Component {
                             onPress={() => this._skipIntoAccountManage("手机认证")}>
                             <View style={styles.secondLineItem}>
 
-                                <Image source={require('../images/set/icon_phone.png')} style={{
+                                <Image source={pic4} style={{
                                     width: 40,
                                     height: 40,
                                     justifyContent: 'center',
@@ -177,7 +272,7 @@ export default class  IdentificationPage extends Component {
                             activeOpacity={0.5}
                             onPress={() => this._skipIntoAccountManage("联系人认证")}>
                             <View style={styles.secondLineItem}>
-                                <Image source={require('../images/set/icon_contack.png')} style={{
+                                <Image source={pic5} style={{
                                     width: 40,
                                     height: 40,
                                     justifyContent: 'center',

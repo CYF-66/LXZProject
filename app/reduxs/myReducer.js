@@ -12,6 +12,7 @@ const initialState = {
     isLoadMore: false,
     isRefreshing: false,
     isLoginOut:false,
+    isGetUserInfo:false
 };
 
 let myReducer = (state = initialState, action) => {
@@ -44,6 +45,18 @@ let myReducer = (state = initialState, action) => {
                 isLoadMore: false,
                 isRefreshing: false,
                 checkData:action.Data
+            };
+        case types.GETUSERINFO:
+            return {
+                ...state,
+                isLoading: true
+            };
+        case types.GETUSERINFORECEIVED:
+            return {
+                ...state,
+                ...action,
+                isLoading: false,
+                isGetUserInfo: true,
             };
         case types.TOKENERROR:
             return {

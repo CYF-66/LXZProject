@@ -26,8 +26,6 @@ import DialogSelected from '../components/alertSelected';
 import CheckWorkContainer from '../containers/CheckWorkContainer'
 import CheckPhoneContainer from '../containers/CheckPhoneContainer'
 import CheckContactContainer from '../containers/CheckContactContainer'
-import DateTimePicker from 'react-native-datetime/DateTime.ios';
-// var DateTimePicker = require('react-native-datetime');
 import TakeOrderContainer from '../containers/TakeOrderContainer'
 const selectedArr = ["拍照", "相册"];
 export default class CheckSchoolPage extends Component {
@@ -53,31 +51,11 @@ export default class CheckSchoolPage extends Component {
             loginoutdate :'',
             chsi_name:'',
             chsi_password:'',
-            data:new Date()
 
             // typeList: {}
         })
         this.showAlertSelected = this.showAlertSelected.bind(this);
         this.callbackSelected = this.callbackSelected.bind(this);
-    }
-
-    showDatePicker() {
-        var date = this.state.date;
-        this.picker.showDatePicker(date, (d)=>{
-            this.setState({date:d});
-        });
-    }
-    showTimePicker() {
-        var date = this.state.date;
-        this.picker.showTimePicker(date, (d)=>{
-            this.setState({date:d});
-        });
-    }
-    showDateTimePicker() {
-        var date = this.state.date;
-        this.picker.showDateTimePicker(date, (d)=>{
-            this.setState({date:d});
-        });
     }
     componentWillMount() {
         if (Platform.OS === 'android') {
@@ -208,34 +186,23 @@ export default class CheckSchoolPage extends Component {
                 </View>
                 <View style={[styles.formInput, styles.formInputSplit]}>
                     <Text
-                        style={{flex:1,
+                        style={{
                             fontSize: 16, color: Common.colors.gray1,
                             alignItems: 'center', justifyContent: 'center'
                         }}>
                         入学年份
                     </Text>
-                    {/*<TextInput*/}
-                        {/*ref="login_psw"*/}
-                        {/*style={styles.loginInput}*/}
-                        {/*// field.restrict = "0-9"*/}
-                        {/*multiline={false}*/}
-                        {/*// defaultValue={this.state.accountPWD.substring(1,this.state.accountPWD.length-1)}*/}
-                        {/*keyboardType={'default'}*/}
-                        {/*secureTextEntry={false}*/}
-                        {/*placeholder='2017-11-8'*/}
-                        {/*underlineColorAndroid={'transparent'}*/}
-                        {/*onChangeText={this.onChangeStartTime.bind(this)}/>*/}
-                    <TouchableOpacity
-                        activeOpacity={0.5}
-                        onPress={() => this.showDateTimePicker()}>
-                    <Text style={{
-                        paddingLeft: 10,
-                        fontSize: 16,
-                        alignItems: 'center',
-                        justifyContent: 'center'}}>
-                        请选择
-                    </Text>
-                    </TouchableOpacity>
+                    <TextInput
+                        ref="login_psw"
+                        style={styles.loginInput}
+                        // field.restrict = "0-9"
+                        multiline={false}
+                        // defaultValue={this.state.accountPWD.substring(1,this.state.accountPWD.length-1)}
+                        keyboardType={'default'}
+                        secureTextEntry={false}
+                        placeholder='格式:2017-11-8'
+                        underlineColorAndroid={'transparent'}
+                        onChangeText={this.onChangeStartTime.bind(this)}/>
                 </View>
                 <View style={[styles.formInput, styles.formInputSplit]}>
                     <Text
@@ -599,7 +566,7 @@ export default class CheckSchoolPage extends Component {
                         // defaultValue={this.state.accountPWD.substring(1,this.state.accountPWD.length-1)}
                         keyboardType={'default'}
                         secureTextEntry={false}
-                        placeholder='2017-11-8'
+                        placeholder='格式:2017-11-8'
                         underlineColorAndroid={'transparent'}
                         onChangeText={this.onChangeLoginOutDate.bind(this)}/>
                 </View>
@@ -635,7 +602,6 @@ export default class CheckSchoolPage extends Component {
                 <DialogSelected ref={(dialog) => {
                     this.dialog = dialog;
                 }}/>
-                <DateTimePicker ref={(picker)=>{this.picker=picker}}/>
                 <Load
                     transparent={true}
                     visible={isLoading}
@@ -802,9 +768,6 @@ export default class CheckSchoolPage extends Component {
         this.dialog.show("请选择照片", selectedArr, '#333333', this.callbackSelected);
     }
 
-    _showDateDialog(){
-
-    }
     // 回调
     callbackSelected(i) {
         switch (i) {
@@ -821,8 +784,8 @@ export default class CheckSchoolPage extends Component {
         ImagePicker.openCamera({
             width: 60,
             height: 60,
-            cropping: true,
-            cropperCircleOverlay: true,
+            cropping: false,
+            cropperCircleOverlay: false,
             includeBase64:true
         }).then(image => {
             // let source = { uri: image.uri };
@@ -846,8 +809,8 @@ export default class CheckSchoolPage extends Component {
         ImagePicker.openPicker({
             width: 60,
             height: 60,
-            cropping: true,
-            cropperCircleOverlay: true,
+            cropping: false,
+            cropperCircleOverlay: false,
             includeBase64:true
         }).then(image => {
             let url=`data:${image.mime};base64,`+ image.data;

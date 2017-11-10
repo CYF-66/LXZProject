@@ -429,11 +429,11 @@ export default class MyPage extends Component {
         ImagePicker.openCamera({
             width: 80,
             height: 80,
-            cropping: true,
+            cropping: false,
             // compressImageMaxWidth:100,
             // compressImageMaxHeight:100,
             compressImageQuality:1,
-            cropperCircleOverlay:true
+            cropperCircleOverlay:false
         }).then(image => {
             // let source = { uri: image.uri };
             // You can also display the image using data:
@@ -453,8 +453,8 @@ export default class MyPage extends Component {
             // compressImageMaxWidth:100,
             // compressImageMaxHeight:100,
             compressImageQuality:1,
-            cropping: true,
-            cropperCircleOverlay:true
+            cropping: false,
+            cropperCircleOverlay:false
         }).then(image => {
             this.setState({
                 avatarSource: {uri:image.path}

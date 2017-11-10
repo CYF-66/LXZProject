@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.facebook.react.ReactApplication;
-import com.keyee.datetime.RCTDateTimePickerPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -27,7 +26,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RCTDateTimePickerPackage(MainActivity.mActivity),
             new PickerPackage()
       );
     }

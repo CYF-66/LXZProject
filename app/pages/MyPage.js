@@ -428,8 +428,8 @@ export default class MyPage extends Component {
 
     takePhoto(){
         ImagePicker.openCamera({
-            width: 100,
-            height: 100,
+            width: 80,
+            height: 80,
             cropping: true,
             // compressImageMaxWidth:100,
             // compressImageMaxHeight:100,
@@ -449,8 +449,8 @@ export default class MyPage extends Component {
     }
     pickMultiple(){
         ImagePicker.openPicker({
-            width: 100,
-            height: 100,
+            width: 80,
+            height: 80,
             // compressImageMaxWidth:100,
             // compressImageMaxHeight:100,
             compressImageQuality:1,

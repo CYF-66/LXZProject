@@ -76,6 +76,7 @@ export default class MyPage extends Component {
         });
     }
     componentWillMount() {
+        // Storage.save('bottomDialog','20');
         // console.log('componentWillMount===------------>');
         Storage.get("isLogin").then((value) => {
             if(value){

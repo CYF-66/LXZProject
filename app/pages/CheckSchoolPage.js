@@ -22,7 +22,7 @@ import IdentificationContainer from '../containers/IdentificationContainer'
 import Storage from '../util/Storage'
 import Load from '../components/Load';
 import {CheckSchool} from '../actions/myActions';
-import DialogSelected from '../components/alertSelected';
+import DialogSelected from '../components/TakePhotoAlert';
 import CheckWorkContainer from '../containers/CheckWorkContainer'
 import CheckPhoneContainer from '../containers/CheckPhoneContainer'
 import CheckContactContainer from '../containers/CheckContactContainer'
@@ -58,6 +58,7 @@ export default class CheckSchoolPage extends Component {
         this.callbackSelected = this.callbackSelected.bind(this);
     }
     componentWillMount() {
+        // Storage.save('bottomDialog','10');
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
@@ -766,6 +767,7 @@ export default class CheckSchoolPage extends Component {
     }
 
     showAlertSelected() {
+        Storage.save('bottomDialog','10');
         this.dialog.show("请选择照片", selectedArr, '#333333', this.callbackSelected);
     }
 

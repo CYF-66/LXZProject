@@ -9,9 +9,9 @@ import {
     Easing,
     Dimensions,
     Platform,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native';
-
+import Storage from '../util/Storage'
 const {width, height} = Dimensions.get('window');
 const [aWidth] = [width-20];
 const [left, top] = [0, 0];
@@ -29,12 +29,21 @@ export default class AlertSelected extends Component {
             hide: true,
             tipTextColor: '#333333',
             aHeight: 236,
+            // bottomDialog:''
         };
         this.entityList = [];//数据源
         this.callback = function () {
         };//回调方法
     }
-
+    // componentWillMount() {
+    //     // console.log('componentWillMount===------------>');
+    //     Storage.get("bottomDialog").then((value) => {
+    //         console.log('bottomDialog===------------>'+value);
+    //         this.setState({
+    //             bottomDialog: value
+    //         })
+    //     });
+    // }
     render() {
         if (this.state.hide) {
             return (<View />)

@@ -26,7 +26,7 @@ import DialogSelected from '../components/alertSelected';
 import CheckWorkContainer from '../containers/CheckWorkContainer'
 import CheckPhoneContainer from '../containers/CheckPhoneContainer'
 import CheckContactContainer from '../containers/CheckContactContainer'
-import DateTimePicker from 'react-native-datetime';
+import DateTimePicker from 'react-native-datetime/DateTime.ios';
 // var DateTimePicker = require('react-native-datetime');
 import TakeOrderContainer from '../containers/TakeOrderContainer'
 const selectedArr = ["拍照", "相册"];

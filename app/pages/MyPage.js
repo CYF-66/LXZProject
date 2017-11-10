@@ -421,6 +421,7 @@ export default class MyPage extends Component {
                 break;
             case 1: // 图库
                 this.pickMultiple();
+
                 break;
         }
     }

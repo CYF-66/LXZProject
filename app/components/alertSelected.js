@@ -93,11 +93,12 @@ export default class AlertSelected extends Component {
     }
 
     renderItem(item, i) {
+        // console.log('item='+item+'i='+ i);
         return (
-            <View style={styles.tipContentView}>
+            <View style={styles.tipContentView} key={i}>
                 <View style={{height: 0.5, backgroundColor: '#a9a9a9', width: aWidth}}/>
                 <TouchableOpacity
-                    key={i}
+                    // key={i}
                     onPress={this.choose.bind(this, i)}
                 >
                     <View style={styles.item}>
@@ -190,7 +191,7 @@ export default class AlertSelected extends Component {
      * tipTextColor: 字体颜色
      * callback：回调方法
      */
-    show(title: string, entityList: Array, tipTextColor: string, callback: Object) {
+    show(menutitle: string, entityList: Array, tipTextColor: string, callback: Object) {
         this.entityList = entityList;
         this.callback = callback;
 
@@ -198,9 +199,9 @@ export default class AlertSelected extends Component {
             if (entityList && entityList.length > 0) {
                 let len = entityList.length;
                 if (len === 1) {
-                    this.setState({title: title, choose0: entityList[0], hide: false, tipTextColor: tipTextColor, aHeight: 180}, this.in);
+                    // this.setState({title: title, choose0: entityList[0], hide: false, tipTextColor: tipTextColor, aHeight: 180}, this.in);
                 } else if (len === 2) {
-                    this.setState({title: title, choose0: entityList[0], choose1: entityList[1], hide: false, tipTextColor: tipTextColor, aHeight: 236}, this.in);
+                    this.setState({title: menutitle, choose0: entityList[0], choose1: entityList[1], hide: false, tipTextColor: tipTextColor, aHeight: 236}, this.in);
                 }
             }
         }

@@ -427,9 +427,12 @@ export default class MyPage extends Component {
 
     takePhoto(){
         ImagePicker.openCamera({
-            width: 60,
-            height: 60,
+            width: 100,
+            height: 100,
             cropping: true,
+            compressImageMaxWidth:100,
+            compressImageMaxHeight:100,
+            compressImageQuality:1,
             cropperCircleOverlay:true
         }).then(image => {
             // let source = { uri: image.uri };
@@ -445,8 +448,10 @@ export default class MyPage extends Component {
     }
     pickMultiple(){
         ImagePicker.openPicker({
-            width: 60,
-            height: 60,
+            width: 100,
+            height: 100,
+            compressImageMaxWidth:100,
+            compressImageMaxHeight:100,
             cropping: true,
             cropperCircleOverlay:true
         }).then(image => {

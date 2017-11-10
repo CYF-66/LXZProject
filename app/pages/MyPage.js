@@ -453,6 +453,7 @@ export default class MyPage extends Component {
             height: 100,
             compressImageMaxWidth:100,
             compressImageMaxHeight:100,
+            compressImageQuality:1,
             cropping: true,
             cropperCircleOverlay:true
         }).then(image => {

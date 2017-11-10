@@ -20,6 +20,7 @@ import {TakeOrder} from '../actions/orderActions'
 import WebViewPage from '../pages/WebViewPage'
 import Storage from '../util/Storage'
 import Load from '../components/Load';
+import NetWorkTool from '../util/NetWorkTool'
 export default class TakeOrderPage extends Component {
 
     constructor(props) {
@@ -52,7 +53,7 @@ export default class TakeOrderPage extends Component {
 
     }
     componentWillMount() {
-
+        NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
         Storage.get("username").then((value) => {
             if(value){
                 this.setState({
@@ -99,6 +100,16 @@ export default class TakeOrderPage extends Component {
             });
             console.log('firstPayDay===------------>'+date);
         });
+    }
+    componentWillUnmount() {
+        NetWorkTool.removeEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
+    }
+    handleMethod(isConnected){
+        console.log('test', (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+            Toast.show(NetWorkTool.NOT_NETWORK
+                , {position:Toast.positions.CENTER});
+        }
     }
     _renderSubmit() {
         return (
@@ -367,11 +378,20 @@ export default class TakeOrderPage extends Component {
     _takeOrder(content) {
         // Toast.show(content, {position: Toast.positions.CENTER});
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            let data={'product_id':this.props.product_id};
-            console.log('this.props.product_id===------------>'+this.props.product_id);
-            console.log('data===------------>'+JSON.stringify(data));
-            dispatch(TakeOrder(data));
+
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    let data={'product_id':this.props.product_id};
+                    console.log('this.props.product_id===------------>'+this.props.product_id);
+                    console.log('data===------------>'+JSON.stringify(data));
+                    dispatch(TakeOrder(data));
+                }
+            });
+
         });
 
         // this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面

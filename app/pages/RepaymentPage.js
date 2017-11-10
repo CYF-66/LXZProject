@@ -18,7 +18,7 @@ import Toast from 'react-native-root-toast';
 import Common from '../util/constants';
 import {GetOrderDetail} from '../actions/orderActions'
 import Load from '../components/Load';
-
+import NetWorkTool from '../util/NetWorkTool'
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 var isRefreshing = false;
 var isLoadMore = false;
@@ -36,12 +36,14 @@ export default class RepaymentPage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     componentWillUnmount() {
         if (Platform.OS === 'android') {
             BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.removeEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     onBackAndroid = () => {
@@ -53,12 +55,27 @@ export default class RepaymentPage extends Component {
         }
         return false;
     };
+    handleMethod(isConnected){
+        console.log('test', (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+            Toast.show(NetWorkTool.NOT_NETWORK
+                , {position:Toast.positions.CENTER});
+        }
+    }
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            let data = {'book_id': this.props.book_id};
-            console.log('data===------------>' + JSON.stringify(data));
-            dispatch(GetOrderDetail(data, this.state.isLoading, isRefreshing, isLoadMore));
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    let data = {'book_id': this.props.book_id};
+                    console.log('data===------------>' + JSON.stringify(data));
+                    dispatch(GetOrderDetail(data, this.state.isLoading, isRefreshing, isLoadMore));
+                }
+            });
+
         });
     }
 
@@ -361,11 +378,17 @@ export default class RepaymentPage extends Component {
     _onRefresh() {
 
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            let data = {'book_id': this.props.book_id};
-            console.log('data===------------>' + JSON.stringify(data));
-            isRefreshing = true;
-            dispatch(GetOrderDetail(data, this.state.isLoading, isRefreshing, isLoadMore));
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    let data = {'book_id': this.props.book_id};
+                    console.log('data===------------>' + JSON.stringify(data));
+                    dispatch(GetOrderDetail(data, this.state.isLoading, isRefreshing, isLoadMore));
+                }
+            });
         });
 
     }

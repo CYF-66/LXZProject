@@ -21,7 +21,7 @@ import Common from '../util/constants';
 import Storage from '../util/Storage'
 import WebViewPage from '../pages/WebViewPage'
 import {GetCheckNum,SendYZM,Register} from '../actions/myActions'
-
+import NetWorkTool from '../util/NetWorkTool'
 export default class RegisterPage extends Component {
 
     constructor(props) {
@@ -78,12 +78,14 @@ export default class RegisterPage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     componentWillUnmount() {
         if (Platform.OS === 'android') {
             BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.removeEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     onBackAndroid = () => {
@@ -95,6 +97,13 @@ export default class RegisterPage extends Component {
         }
         return false;
     };
+    handleMethod(isConnected){
+        console.log('test', (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+            Toast.show(NetWorkTool.NOT_NETWORK
+                , {position:Toast.positions.CENTER});
+        }
+    }
     componentWillUpdate() {
         InteractionManager.runAfterInteractions(() => {
             const {registerReducer} = this.props;
@@ -110,7 +119,14 @@ export default class RegisterPage extends Component {
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
             const {dispatch} = this.props;
-            dispatch(GetCheckNum());
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    dispatch(GetCheckNum());
+                }
+            });
         });
     }
 
@@ -239,12 +255,20 @@ export default class RegisterPage extends Component {
         }
         // 交互管理器在任意交互/动画完成之后，允许安排长期的运行工作. 在所有交互都完成之后安排一个函数来运行。
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            this.state.isLoading = true;
-            let yzmtoken=this.state.yzmtoken;
-            let data = {'phone': account, 'password': accountPWD,'cfmpassword':accountPWD,'yzmtoken':yzmtoken,yzm:this.state.yzm};//da955b5ca4d323ef410cc1d29f8d99ff
-            console.log('data===------------>'+JSON.stringify(data));
-            dispatch(Register(data, this.state.isLoading));
+
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    this.state.isLoading = true;
+                    let yzmtoken=this.state.yzmtoken;
+                    let data = {'phone': account, 'password': accountPWD,'cfmpassword':accountPWD,'yzmtoken':yzmtoken,yzm:this.state.yzm};//da955b5ca4d323ef410cc1d29f8d99ff
+                    console.log('data===------------>'+JSON.stringify(data));
+                    dispatch(Register(data, this.state.isLoading));
+                }
+            });
         });
     }
 

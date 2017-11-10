@@ -22,6 +22,7 @@ import CheckPhoneContainer from '../containers/CheckPhoneContainer'
 import CheckContactContainer from '../containers/CheckContactContainer'
 import Storage from '../util/Storage'
 import {GetUserInfo} from '../actions/myActions'
+import NetWorkTool from '../util/NetWorkTool'
 export default class  IdentificationPage extends Component {
 
     constructor(props) {
@@ -77,6 +78,7 @@ export default class  IdentificationPage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
         Storage.get('name').then((value) => {
             this.setState({
                 isNameIdentiy:value,
@@ -108,6 +110,7 @@ export default class  IdentificationPage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.removeEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     onBackAndroid = () => {
@@ -119,13 +122,26 @@ export default class  IdentificationPage extends Component {
         }
         return false;
     };
-
+    handleMethod(isConnected){
+        console.log('test', (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+            Toast.show(NetWorkTool.NOT_NETWORK
+                , {position:Toast.positions.CENTER});
+        }
+    }
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            let data = {};
-            console.log('data===------------>' + JSON.stringify(data));
-            dispatch(GetUserInfo(data));
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    let data = {};
+                    console.log('data===------------>' + JSON.stringify(data));
+                    dispatch(GetUserInfo(data));
+                }
+            });
         });
     }
     render() {

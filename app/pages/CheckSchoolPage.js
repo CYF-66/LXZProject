@@ -27,6 +27,7 @@ import CheckWorkContainer from '../containers/CheckWorkContainer'
 import CheckPhoneContainer from '../containers/CheckPhoneContainer'
 import CheckContactContainer from '../containers/CheckContactContainer'
 import TakeOrderContainer from '../containers/TakeOrderContainer'
+import NetWorkTool from '../util/NetWorkTool'
 const selectedArr = ["拍照", "相册"];
 export default class CheckSchoolPage extends Component {
 
@@ -62,12 +63,14 @@ export default class CheckSchoolPage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     componentWillUnmount() {
         if (Platform.OS === 'android') {
             BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.removeEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     onBackAndroid = () => {
@@ -80,6 +83,13 @@ export default class CheckSchoolPage extends Component {
         return false;
     };
 
+    handleMethod(isConnected){
+        console.log('test', (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+            Toast.show(NetWorkTool.NOT_NETWORK
+                , {position:Toast.positions.CENTER});
+        }
+    }
     componentWillUpdate() {
         InteractionManager.runAfterInteractions(() => {
             const {checkReducer} = this.props;
@@ -729,14 +739,20 @@ export default class CheckSchoolPage extends Component {
         }
 
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            // dispatch(GetOneKeyRegister(isLoading));
-            //11010497   cks69t
-            this.state.isLoading = true;
-            // let data = {'phone': phone};
-            console.log('data===------------>'+JSON.stringify(data));
-            // let data={'name':'13788957291','identity':'000000'};
-            dispatch(CheckSchool(data, this.state.isLoading));
+
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    this.state.isLoading = true;
+                    // let data = {'phone': phone};
+                    console.log('data===------------>'+JSON.stringify(data));
+                    // let data={'name':'13788957291','identity':'000000'};
+                    dispatch(CheckSchool(data, this.state.isLoading));
+                }
+            });
         });
     }
 

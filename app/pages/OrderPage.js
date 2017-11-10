@@ -14,6 +14,7 @@ import {
 //引入标题支持包
 import NavigationBar from 'react-native-navigationbar'
 import Toast from 'react-native-root-toast';
+import NetWorkTool from '../util/NetWorkTool'
 import Common from '../util/constants';
 import RepaymentContainer from '../containers/RepaymentContainer'
 import LoginContainer from '../containers/LoginContainer'
@@ -39,6 +40,7 @@ export default class OrderPage extends Component {
     }
 
     componentWillMount() {
+        NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
         Storage.get("isLogin").then((value) => {
             if(value){
                 // console.log('value===------------>'+value);
@@ -56,13 +58,30 @@ export default class OrderPage extends Component {
         });
 
     }
-
+    componentWillUnmount() {
+        NetWorkTool.removeEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
+    }
+    handleMethod(isConnected){
+        console.log('test', (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+            Toast.show(NetWorkTool.NOT_NETWORK
+                , {position:Toast.positions.CENTER});
+        }
+    }
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            let data={'pageNum':this.state.currentPage,'pageSize':'10'};
-            console.log('data===------------>'+JSON.stringify(data));
-            dispatch(GetOrderList(data,this.state.isLoading,isRefreshing,isLoadMore));
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    let data={'pageNum':this.state.currentPage,'pageSize':'10'};
+                    console.log('data===------------>'+JSON.stringify(data));
+                    dispatch(GetOrderList(data,this.state.isLoading,isRefreshing,isLoadMore));
+                }
+            });
+
         });
     }
 
@@ -289,11 +308,17 @@ export default class OrderPage extends Component {
     _onRefresh() {
 
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            let data={'pageNum':this.state.currentPage,'pageSize':'10'};
-            console.log('data===------------>'+JSON.stringify(data));
-            isRefreshing=true;
-            dispatch(GetOrderList(data,this.state.isLoading,isRefreshing,isLoadMore));
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    let data={'pageNum':this.state.currentPage,'pageSize':'10'};
+                    console.log('data===------------>'+JSON.stringify(data));
+                    dispatch(GetOrderList(data,this.state.isLoading,isRefreshing,isLoadMore));
+                }
+            });
         });
 
     }

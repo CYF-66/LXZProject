@@ -26,6 +26,7 @@ import {CheckCenter} from '../actions/myActions'
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 var isRefreshing=true;
 var isLoadMore=false;
+import NetWorkTool from '../util/NetWorkTool'
 export default class CheckPage extends Component {
 
     constructor(props) {
@@ -43,6 +44,7 @@ export default class CheckPage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
         Storage.get("isLogin").then((value) => {
             if(value){
             }else{
@@ -59,6 +61,7 @@ export default class CheckPage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.removeEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     onBackAndroid = () => {
@@ -70,12 +73,28 @@ export default class CheckPage extends Component {
         }
         return false;
     };
+    handleMethod(isConnected){
+        console.log('test', (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+            Toast.show(NetWorkTool.NOT_NETWORK
+                , {position:Toast.positions.CENTER});
+        }
+    }
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            let data={'pageNum':1,'pageSize':10};
-            console.log('data===------------>'+JSON.stringify(data));
-            dispatch(CheckCenter(data,this.state.isLoading,isRefreshing,isLoadMore));
+
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    let data={'pageNum':1,'pageSize':10};
+                    console.log('data===------------>'+JSON.stringify(data));
+                    dispatch(CheckCenter(data,this.state.isLoading,isRefreshing,isLoadMore));
+                }
+            });
+
         });
     }
     render() {
@@ -318,11 +337,17 @@ export default class CheckPage extends Component {
     // 下拉刷新
     _onRefresh() {
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            let data={'pageNum':1,'pageSize':10};
-            console.log('data===------------>'+JSON.stringify(data));
-            isRefreshing=true;
-            dispatch(CheckCenter(data,this.state.isLoading,isRefreshing,isLoadMore));
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    let data={'pageNum':1,'pageSize':10};
+                    console.log('data===------------>'+JSON.stringify(data));
+                    dispatch(CheckCenter(data,this.state.isLoading,isRefreshing,isLoadMore));
+                }
+            });
         });
 
     }

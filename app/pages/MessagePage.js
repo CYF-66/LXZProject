@@ -19,6 +19,7 @@ import NavigationBar from 'react-native-navigationbar'
 import Toast from 'react-native-root-toast';
 import {GetMessage} from '../actions/homeActions'
 import Load from '../components/Load';
+import NetWorkTool from '../util/NetWorkTool'
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 var isRefreshing=false;
 var isLoadMore=false;
@@ -38,12 +39,14 @@ export default class MessagePage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     componentWillUnmount() {
         if (Platform.OS === 'android') {
             BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.removeEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     onBackAndroid = () => {
@@ -55,12 +58,27 @@ export default class MessagePage extends Component {
         }
         return false;
     };
+    handleMethod(isConnected){
+        console.log('test', (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+            Toast.show(NetWorkTool.NOT_NETWORK
+                , {position:Toast.positions.CENTER});
+        }
+    }
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            let data={'pageNum':this.state.currentPage};
-            console.log('data===------------>'+JSON.stringify(data));
-            dispatch(GetMessage(data,this.state.isLoading,isRefreshing,isLoadMore));
+
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    let data={'pageNum':this.state.currentPage};
+                    console.log('data===------------>'+JSON.stringify(data));
+                    dispatch(GetMessage(data,this.state.isLoading,isRefreshing,isLoadMore));
+                }
+            });
         });
     }
 
@@ -175,11 +193,19 @@ export default class MessagePage extends Component {
     _onRefresh() {
 
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            let data={'pageNum':this.state.currentPage};
-            console.log('data===------------>'+JSON.stringify(data));
-            isRefreshing=true;
-            dispatch(GetMessage(data,this.state.isLoading,isRefreshing,isLoadMore));
+
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    let data={'pageNum':this.state.currentPage};
+                    console.log('data===------------>'+JSON.stringify(data));
+                    isRefreshing=true;
+                    dispatch(GetMessage(data,this.state.isLoading,isRefreshing,isLoadMore));
+                }
+            });
         });
 
     }

@@ -20,6 +20,7 @@ import Toast from 'react-native-root-toast';
 import {CheckContact} from '../actions/myActions'
 import ModalDropdown from '../components/ModalDropdown'
 import Load from '../components/Load';
+import NetWorkTool from '../util/NetWorkTool'
 import Storage from '../util/Storage'
 const  ONE_RELATIVE_OPTIONS = ['父亲', '母亲', '配偶', '儿子', '女儿', '朋友'];
 const  TWO_RELATIVE_OPTIONS = ['父亲', '母亲', '配偶', '儿子', '女儿', '朋友'];
@@ -60,12 +61,14 @@ export default class CheckContactPage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     componentWillUnmount() {
         if (Platform.OS === 'android') {
             BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.removeEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     onBackAndroid = () => {
@@ -77,6 +80,13 @@ export default class CheckContactPage extends Component {
         }
         return false;
     };
+    handleMethod(isConnected){
+        console.log('test', (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+            Toast.show(NetWorkTool.NOT_NETWORK
+                , {position:Toast.positions.CENTER});
+        }
+    }
     componentWillUpdate() {
         InteractionManager.runAfterInteractions(() => {
             const {checkReducer} = this.props;
@@ -339,15 +349,21 @@ export default class CheckContactPage extends Component {
         var tworelative=parseInt(twolinkrealation)+1;
 
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            // dispatch(GetOneKeyRegister(isLoading));
-            //11010497   cks69t
-            this.state.isLoading = true;
-            let data = {'onelinkman ': onelinkman , 'onelinkrealation': onerelative,'onelinkcell':onelinkphone,
-                'twolinkman ':twolinkman ,'twolinkrealation':tworelative,'twolinkcell':twolinkphone};
-            console.log('data===------------>'+JSON.stringify(data));
-            // let data={'name':'13788957291','identity':'000000'};
-            dispatch(CheckContact(data, this.state.isLoading));
+
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    this.state.isLoading = true;
+                    let data = {'onelinkman ': onelinkman , 'onelinkrealation': onerelative,'onelinkcell':onelinkphone,
+                        'twolinkman ':twolinkman ,'twolinkrealation':tworelative,'twolinkcell':twolinkphone};
+                    console.log('data===------------>'+JSON.stringify(data));
+                    // let data={'name':'13788957291','identity':'000000'};
+                    dispatch(CheckContact(data, this.state.isLoading));
+                }
+            });
         });
     }
 

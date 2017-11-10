@@ -493,21 +493,23 @@ export default class MyPage extends Component {
                 }
             });
         }else if(content=="我的优惠券"){
-            Storage.get("isLogin").then((value) => {
-                if(value){
-                    this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
-                        name:'CouponContainer',
-                        component: CouponContainer,
-                        // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
-                    })
-                }else{
-                    this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
-                        name:'LoginContainer',
-                        component: LoginContainer,
-                        // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
-                    });
-                }
-            });
+            Toast.show('暂未开通', {position: Toast.positions.CENTER});
+
+            // Storage.get("isLogin").then((value) => {
+            //     if(value){
+            //         this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+            //             name:'CouponContainer',
+            //             component: CouponContainer,
+            //             // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+            //         })
+            //     }else{
+            //         this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+            //             name:'LoginContainer',
+            //             component: LoginContainer,
+            //             // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+            //         });
+            //     }
+            // });
         }else if(content=="设置"){
             this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
                 name:'SetContainer',

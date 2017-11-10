@@ -23,6 +23,7 @@ import Common from '../util/constants';
 import Storage from '../util/Storage'
 import RegisterContainer from '../containers/RegisterContainer'
 import loginReducer from "../reduxs/loginReducer";
+import NetWorkTool from '../util/NetWorkTool'
 export default class LoginPage extends Component {
 
     constructor(props) {
@@ -55,6 +56,7 @@ export default class LoginPage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.removeEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
     }
 
     onBackAndroid = () => {
@@ -66,10 +68,18 @@ export default class LoginPage extends Component {
         }
         return false;
     };
+    handleMethod(isConnected){
+        console.log('test', (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+            Toast.show(NetWorkTool.NOT_NETWORK
+                , {position:Toast.positions.CENTER});
+        }
+    }
     componentWillMount() {
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
         Storage.getUser().then((user) => {
             if (user) {
                 this.setState({
@@ -204,13 +214,18 @@ export default class LoginPage extends Component {
         }
         // 交互管理器在任意交互/动画完成之后，允许安排长期的运行工作. 在所有交互都完成之后安排一个函数来运行。
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            // dispatch(GetOneKeyRegister(isLoading));
-            //11010497   cks69t
-            this.state.isLoading = true;
-            let data = {'phone': account, 'password': accountPWD};
-            // let data={'phone':'13788957291','password':'000000'};
-            dispatch(HttpLogin(data, this.state.isLoading));
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    this.state.isLoading = true;
+                    let data = {'phone': account, 'password': accountPWD};
+                    // let data={'phone':'13788957291','password':'000000'};
+                    dispatch(HttpLogin(data, this.state.isLoading));
+                }
+            });
         });
     }
 

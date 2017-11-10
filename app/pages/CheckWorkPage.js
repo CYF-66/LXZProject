@@ -23,6 +23,7 @@ import CheckPhoneContainer from '../containers/CheckPhoneContainer'
 import CheckContactContainer from '../containers/CheckContactContainer'
 import TakeOrderContainer from '../containers/TakeOrderContainer'
 import Storage from '../util/Storage'
+import NetWorkTool from '../util/NetWorkTool'
 const  WORK_YEAR_OPTIONS = ['0~6个月', '6~12个月', '1~3年', '3~5年', '5~8年', '8年以上'];
 const WORK_STATE_OPTIONS = ['在职', '自由职业', '其他'];
 const COMPANY_SORT_OPTIONS = ['机关/事业单位', '国有企业', '上市公司', '民营/私营企业', '合资/外资'];
@@ -62,6 +63,20 @@ export default class CheckWorkPage extends Component {
             }
         });
 
+    }
+    componentWillMount() {
+        NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
+    }
+    componentWillUnmount() {
+        NetWorkTool.removeEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
+    }
+
+    handleMethod(isConnected){
+        console.log('test', (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+            Toast.show(NetWorkTool.NOT_NETWORK
+                , {position:Toast.positions.CENTER});
+        }
     }
     render() {
         const {checkReducer} = this.props;
@@ -362,16 +377,22 @@ export default class CheckWorkPage extends Component {
         var income=parseInt(income_id)+1;
 
         InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            // dispatch(GetOneKeyRegister(isLoading));
-            //11010497   cks69t
-            this.state.isLoading = true;
-            let data = {'work_year': work_year,'work_state':work_state,'currcompany':companyName,
-                'currwork_address':companyAddress,
-                'currwork_cell':companyPhone,'company_sort':company_sort,'job':job,'income':income,'placeaddress':currentLiveAddress};
-            console.log('data===------------>'+JSON.stringify(data));
-            // let data={'name':'13788957291','identity':'000000'};
-            dispatch(CheckWork(data, this.state.isLoading));
+
+            NetWorkTool.checkNetworkState((isConnected)=>{
+                if(!isConnected){
+                    Toast.show(NetWorkTool.NOT_NETWORK);
+                    return;
+                }else{
+                    const {dispatch} = this.props;
+                    this.state.isLoading = true;
+                    let data = {'work_year': work_year,'work_state':work_state,'currcompany':companyName,
+                        'currwork_address':companyAddress,
+                        'currwork_cell':companyPhone,'company_sort':company_sort,'job':job,'income':income,'placeaddress':currentLiveAddress};
+                    console.log('data===------------>'+JSON.stringify(data));
+                    // let data={'name':'13788957291','identity':'000000'};
+                    dispatch(CheckWork(data, this.state.isLoading));
+                }
+            });
         });
 
     }

@@ -187,7 +187,8 @@ export default class MyPage extends Component {
                         <Image source={this.state.avatarSource} style={{
                             width:100,
                             height:100,
-                            borderRadius:50
+                            borderRadius:50,
+                            resizeMode:'stretch'
                         }}/>
                         </TouchableOpacity>
                         {this.state.isLogin ? this._renderAfterLogin() : this._renderBeforeLogin()}

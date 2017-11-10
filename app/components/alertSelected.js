@@ -1,11 +1,8 @@
-/**
- * Created by sybil052 on 2017/6/19.
- */
 import React, {Component} from 'react';
 import {
     StyleSheet,
     View,
-    Modal,
+    Image,
     Text,
     TouchableHighlight,
     Animated,
@@ -17,7 +14,7 @@ import {
 
 const {width, height} = Dimensions.get('window');
 const [aWidth] = [width-20];
-const [left, top] = [0, -20];
+const [left, top] = [0, 0];
 const [middleLeft] = [(width - aWidth) / 2];
 
 export default class AlertSelected extends Component {
@@ -43,7 +40,6 @@ export default class AlertSelected extends Component {
             return (<View />)
         } else {
             return (
-                <Modal visible={true} transparent={true}>
                 <View style={styles.container}>
                     <Animated.View style={styles.mask}>
                     </Animated.View>
@@ -54,11 +50,11 @@ export default class AlertSelected extends Component {
                         left: middleLeft,
                         ...Platform.select({
                             ios:{
-                                bottom: - 20,
+                                bottom:20,
                             },
                             android:{
-                                bottom: 10,
-                            }
+                                bottom:20,
+                            },
                         }),
                         alignItems: "center",
                         justifyContent: "space-between",
@@ -87,18 +83,15 @@ export default class AlertSelected extends Component {
                         </TouchableHighlight>
                     </Animated.View>
                 </View>
-                </Modal>
             );
         }
     }
 
     renderItem(item, i) {
-        // console.log('item='+item+'i='+ i);
         return (
-            <View style={styles.tipContentView} key={i}>
+            <View style={styles.tipContentView}  key={i}>
                 <View style={{height: 0.5, backgroundColor: '#a9a9a9', width: aWidth}}/>
                 <TouchableOpacity
-                    // key={i}
                     onPress={this.choose.bind(this, i)}
                 >
                     <View style={styles.item}>
@@ -187,11 +180,11 @@ export default class AlertSelected extends Component {
     /**
      * 弹出控件，最多支持3个选项(包括取消)
      * titile: 标题
-     * entityList：选择项数据   数组
+     * entityList：选择项数据  数组
      * tipTextColor: 字体颜色
      * callback：回调方法
      */
-    show(menutitle: string, entityList: Array, tipTextColor: string, callback: Object) {
+    show(title: string, entityList: Array, tipTextColor: string, callback: Object) {
         this.entityList = entityList;
         this.callback = callback;
 
@@ -199,9 +192,9 @@ export default class AlertSelected extends Component {
             if (entityList && entityList.length > 0) {
                 let len = entityList.length;
                 if (len === 1) {
-                    // this.setState({title: title, choose0: entityList[0], hide: false, tipTextColor: tipTextColor, aHeight: 180}, this.in);
+                    this.setState({title: title, choose0: entityList[0], hide: false, tipTextColor: tipTextColor, aHeight: 180}, this.in);
                 } else if (len === 2) {
-                    this.setState({title: menutitle, choose0: entityList[0], choose1: entityList[1], hide: false, tipTextColor: tipTextColor, aHeight: 236}, this.in);
+                    this.setState({title: title, choose0: entityList[0], choose1: entityList[1], hide: false, tipTextColor: tipTextColor, aHeight: 236}, this.in);
                 }
             }
         }
@@ -209,17 +202,16 @@ export default class AlertSelected extends Component {
 }
 
 const styles = StyleSheet.create({
-    container1: {
+    container: {
         position: "absolute",
         width: width,
         height: height,
         left: left,
         top: top,
-        backgroundColor: "rgba(0, 0, 0, 0)",
     },
     mask: {
         justifyContent: "center",
-        backgroundColor: "rgba(0, 0, 0, 2)",
+        backgroundColor: "#000000",
         opacity: 0.3,
         position: "absolute",
         width: width,

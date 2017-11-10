@@ -245,7 +245,7 @@ export default class CheckSchoolPage extends Component {
                         onChangeText={this.onChangeDorm.bind(this)}/>
                 </View>
 
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <View style={{alignItems: 'center', justifyContent: 'center',marginTop:10}}>
                     <Text style={{
                         fontSize: 16, color: Common.colors.gray1,
                     }}>
@@ -260,7 +260,8 @@ export default class CheckSchoolPage extends Component {
                             borderRadius: 5,
                             marginTop: 10,
                             justifyContent: 'center',
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            resizeMode:'stretch'
                         }}/>
                     </TouchableOpacity>
                 </View>

@@ -431,8 +431,8 @@ export default class MyPage extends Component {
             width: 100,
             height: 100,
             cropping: true,
-            compressImageMaxWidth:100,
-            compressImageMaxHeight:100,
+            // compressImageMaxWidth:100,
+            // compressImageMaxHeight:100,
             compressImageQuality:1,
             cropperCircleOverlay:true
         }).then(image => {
@@ -451,8 +451,8 @@ export default class MyPage extends Component {
         ImagePicker.openPicker({
             width: 100,
             height: 100,
-            compressImageMaxWidth:100,
-            compressImageMaxHeight:100,
+            // compressImageMaxWidth:100,
+            // compressImageMaxHeight:100,
             compressImageQuality:1,
             cropping: true,
             cropperCircleOverlay:true

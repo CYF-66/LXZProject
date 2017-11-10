@@ -81,11 +81,13 @@ let checkReducer = (state = initialState, action) => {
                 isCheckContact:true,
             };
         case types.TOKENERROR:
+            console.log('=======TOKENERROR------------>');
             return {
                 ...state,
                 isLoading: false,
             };
         case types.ACTIONERROR:
+            console.log('=======ACTIONERROR------------>');
             return {
                 ...state,
                 isLoading: false,

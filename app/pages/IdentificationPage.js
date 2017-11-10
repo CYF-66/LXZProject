@@ -333,33 +333,28 @@ export default class  IdentificationPage extends Component {
             });
 
         }else if(content=="学历认证"){
-            this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
-                name:'CheckSchoolContainer',
-                component: CheckSchoolContainer,
-                passProps: {isNeedSkip:false}
-            })
-            // Storage.get('school').then((value) => {
-            //     if(!value){
-            //         this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
-            //             name:'CheckSchoolContainer',
-            //             component: CheckSchoolContainer,
-            //             passProps: {isNeedSkip:false}
-            //         })
-            //     }else{
-            //         Storage.get('iseducauthnm').then((value) => {
-            //             if(value){
-            //                 if(value=='认证成功'){
-            //                     Toast.show('已认证', {position: Toast.positions.CENTER});
-            //                 }else{
-            //                     Toast.show('申请认证中，请等待审核完成', {position: Toast.positions.CENTER});
-            //                 }
-            //             }else{
-            //
-            //                 Toast.show('审核中', {position: Toast.positions.CENTER});
-            //             }
-            //         });
-            //     }
-            // });
+            Storage.get('school').then((value) => {
+                if(!value){
+                    this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                        name:'CheckSchoolContainer',
+                        component: CheckSchoolContainer,
+                        passProps: {isNeedSkip:false}
+                    })
+                }else{
+                    Storage.get('iseducauthnm').then((value) => {
+                        if(value){
+                            if(value=='认证成功'){
+                                Toast.show('已认证', {position: Toast.positions.CENTER});
+                            }else{
+                                Toast.show('申请认证中，请等待审核完成', {position: Toast.positions.CENTER});
+                            }
+                        }else{
+
+                            Toast.show('审核中', {position: Toast.positions.CENTER});
+                        }
+                    });
+                }
+            });
 
         }else if(content=="工作信息"){
             Storage.get('work').then((value) => {

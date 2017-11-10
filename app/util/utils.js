@@ -69,8 +69,10 @@ let Util = {
                     // successCallback(result.Code, result.Message, result.Data);
                     if(responseText.indexOf('Code')>=0&&responseText.indexOf('Message')>=0){
                         successCallback(result.Code, result.Message, result.Data);
+                        console.log('successCallback='+JSON.stringify(result));
                     }else{
                         failCallback(result);
+                        console.log('failCallbackresult='+JSON.stringify(result));
                     }
                 })
                 .catch((err) => {

@@ -9,7 +9,7 @@
  */
 
 // const IPAddress = 'http://118.178.246.192:8733/';    //在线服务器
-const IPAddress = 'http://114.67.154.29/';    //测试服务器
+const IPAddress = 'http://117.48.200.2/';    //测试服务器
 // const IPAddress = 'http://114.67.154.29/';    //http://114.67.154.29/custom/test
 
 

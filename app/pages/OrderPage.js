@@ -139,6 +139,7 @@ export default class OrderPage extends Component {
                             renderRow={this._renderItem.bind(this)}
                             // initialListSize={1}
                             enableEmptySections={true}
+                            removeClippedSubviews={false}
                             // onScroll={this._onScroll}
                             // onEndReached={this._onEndReach.bind(this)}
                             // onEndReachedThreshold={30}

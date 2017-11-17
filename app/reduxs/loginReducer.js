@@ -11,7 +11,8 @@ const initialState = {
     isLoadMore: false,
     isRefreshing: false,
     isLoggedIn: false,
-    user:{}
+    user:{},
+    isRreshOrder:true
 };
 
 let loginReducer = (state = initialState, action) => {
@@ -40,6 +41,7 @@ let loginReducer = (state = initialState, action) => {
                 ...action,
                 isLoading: false,
                 isLoggedIn:true,
+                isRreshOrder:true
             };
         case types.TOKENERROR://token失效
             return {

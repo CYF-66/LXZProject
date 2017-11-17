@@ -18,5 +18,5 @@ class OrderContainer extends Component {
 }
 
 export default connect((state) => {
-    return { orderReducer} = state;
+    return { orderReducer,loginReducer} = state;
 })(OrderContainer);

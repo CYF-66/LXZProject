@@ -14,6 +14,7 @@ const initialState = {
     isLoadMore: false,
     isRefreshing: false,
     isTakeOrderSuccess:false,
+    isTakeOrderListSuccess:false,
 };
 
 let orderReducer = (state = initialState, action) => {
@@ -31,6 +32,7 @@ let orderReducer = (state = initialState, action) => {
                 orderData: action.Data,
                 isLoadMore: false,
                 isRefreshing: false,
+                isTakeOrderListSuccess:true,
                 // DataList: action.DataList.length> 0 ? state.DataList.concat(action.DataList) : state.DataList
             };
         case types.MYORDERDETAIL:
@@ -68,6 +70,7 @@ let orderReducer = (state = initialState, action) => {
                 isLoadMore: false,
                 isRefreshing: false,
                 code: action.Code,
+                isTakeOrderListSuccess:false,
             };
         case types.ACTIONERROR:
             return {
@@ -76,6 +79,7 @@ let orderReducer = (state = initialState, action) => {
                 isRefreshing: false,
                 isLoadMore: false,
                 isTakeOrderSuccess:false,
+                isTakeOrderListSuccess:false,
             };
         default:
             return state;

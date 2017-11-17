@@ -30,6 +30,8 @@ export let HttpLogin = (data,isLoading) => {
                     Storage.save('refresh_token',Data.refresh_token);
                     Storage.save('username',user.name);
                     Storage.save('userphone',user.phone);
+                    Storage.save('kf_name',user.kf_name);
+                    Storage.save('kf_wechat',user.kf_wechat);
                     if(user.isrealauth=='1'||user.isrealauth=='4'){
                         Storage.save('name',true);
                     }else{
@@ -110,6 +112,8 @@ export let LoginOut = (data,isLoading) => {
                     Storage.save('iseducauthnm','');
                     Storage.save('islinkauthnm','');
                     Storage.save('isworkauthnm','');
+                    Storage.save('kf_name','');
+                    Storage.save('kf_wechat','');
                 }else if(Code==2){
                     Toast.show("登录验证失败，请重新登录"
                         , {position:Toast.positions.CENTER});

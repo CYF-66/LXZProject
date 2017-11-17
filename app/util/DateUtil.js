@@ -23,7 +23,14 @@ class DateUtil{
 
         }
     }
-
+    static formateDate(date) {
+        var year = date.getFullYear() ;
+        var month = date.getMonth() +1 ;
+        var day = date.getDate() ;
+        var formatedStr = year + '-' + month +'-' + day ;
+        console.log('formatedStr: ' + formatedStr ) ;
+        return formatedStr ;
+    }
     // timestamp时间戳 formater时间格式
     static formatDate(timestamp, formater) {
         let date = new Date();

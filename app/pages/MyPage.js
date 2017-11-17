@@ -25,7 +25,7 @@ import Storage from '../util/Storage'
 import DialogSelected from '../components/alertSelected';
 import WebViewPage from '../pages/WebViewPage'
 import CustomServicePage from '../pages/CustomServicePage'
-import AboutPage from '../pages/AboutPage'
+
 import {GetUserInfo} from '../actions/myActions'
 // import Demo from '../pages/Demo'
 const selectedArr = ["拍照", "相册"];
@@ -79,14 +79,6 @@ export default class MyPage extends Component {
         // Storage.save('bottomDialog','20');
         // console.log('componentWillMount===------------>');
         Storage.get("isLogin").then((value) => {
-            if(value){
-            }else{
-                this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
-                    name:'LoginContainer',
-                    component: LoginContainer,
-                    // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
-                });
-            }
             this.setState({
                 isLogin: value
             })
@@ -363,36 +355,6 @@ export default class MyPage extends Component {
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    activeOpacity={0.5}
-                    onPress={() => this._skipIntoAccountManage("关于")}>
-                    <View style={{
-                        flexDirection: 'row',
-                        padding: 15,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: Common.colors.white,
-                        borderBottomColor: Common.colors.bottomlinecolor,
-                        borderBottomWidth: 1
-                    }}>
-                        <Image source={require('../images/set/icon_about.png')} style={{
-                            width: 30,
-                            height: 30,
-                        }}/>
-                        <Text style={{
-                            flex: 1,
-                            color: Common.colors.gray1,
-                            marginLeft: 10,
-                            fontSize: 15,
-                            justifyContent: 'center'
-                        }}>
-                            关于
-                        </Text>
-                        <Text style={{color: Common.colors.gray1, fontSize: 15,}}>
-                            >
-                        </Text>
-                    </View>
-                </TouchableOpacity>
             </ScrollView>
                 <DialogSelected ref={(dialog)=>{
                     this.dialog = dialog;
@@ -493,7 +455,7 @@ export default class MyPage extends Component {
                 }
             });
         }else if(content=="我的优惠券"){
-            Toast.show('暂未开通', {position: Toast.positions.CENTER});
+            Toast.show('暂未开通,敬请期待!', {position: Toast.positions.CENTER});
 
             // Storage.get("isLogin").then((value) => {
             //     if(value){
@@ -517,10 +479,21 @@ export default class MyPage extends Component {
                 // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
             })
         }else if(content=="客服与反馈"){
-            this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
-                component: CustomServicePage,
-                // passProps:{title: '常见问题',url: Common.url.questionUrl}
-            })
+            Storage.get("isLogin").then((value) => {
+                if(value){
+                    this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                        component: CustomServicePage,
+                        // passProps:{title: '常见问题',url: Common.url.questionUrl}
+                    })
+                }else{
+                    this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                        name:'LoginContainer',
+                        component: LoginContainer,
+                        // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+                    });
+                }
+            });
+
         }else if(content=="常见问题"){
                 this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
                     component: WebViewPage,
@@ -554,11 +527,6 @@ export default class MyPage extends Component {
                     });
                 }
             });
-        }else if(content=='关于'){
-            this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
-                component: AboutPage,
-                // passProps:{title: '常见问题',url: Common.url.questionUrl}
-            })
         }
     }
 }

@@ -20,8 +20,8 @@ export let GetHomeInfo = (data,isLoading) => {
             (Code, Message, Data) => {
 
             if(Code==1){
-                Toast.show('成功'
-                    , {position:Toast.positions.CENTER});
+                // Toast.show('成功'
+                //     , {position:Toast.positions.CENTER});
                 dispatch({type: types.GETHOMEINFORECEIVED, Code: Code, Message: Message, Data: Data});
             }else if(Code==2){
                 Storage.get("refresh_token").then((value) => {
@@ -62,8 +62,10 @@ export let GetMessage = (data,isLoading,isRefreshing,isLoadMore) => {
         return Util.post(url, data,
             (Code, Message, Data) => {
             if(Code==1){
-                Toast.show(Message
-                    , {position:Toast.positions.CENTER});
+                if(Data==''){
+                    Toast.show(Message
+                        , {position:Toast.positions.CENTER});
+                }
                 dispatch({type: types.GETMESSAGERECEIVED, Code: Code, Message: Message, Data: Data});
             }else if(Code==2){
                 Storage.get("refresh_token").then((value) => {

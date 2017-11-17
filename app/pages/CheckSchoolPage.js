@@ -10,7 +10,9 @@ import {
     Text,
     TextInput,
     StyleSheet,
-    BackHandler
+    BackHandler,
+    DatePickerAndroid,
+    TouchableHighlight
 } from 'react-native'
 //引入标题支持包
 // import SetPage from 'SetPage'
@@ -28,7 +30,22 @@ import CheckPhoneContainer from '../containers/CheckPhoneContainer'
 import CheckContactContainer from '../containers/CheckContactContainer'
 import TakeOrderContainer from '../containers/TakeOrderContainer'
 import NetWorkTool from '../util/NetWorkTool'
+import DateUtil from "../util/DateUtil";
 const selectedArr = ["拍照", "相册"];
+
+class CustomButton extends React.Component {
+    render() {
+        return (
+            <TouchableHighlight
+                style={styles.button}
+                underlayColor="#a5a5a5"
+                onPress={this.props.onPress}>
+                <Text style={{fontSize: 16, color: Common.colors.gray1,
+                    alignItems: 'center', justifyContent: 'center'}}>{this.props.text}</Text>
+            </TouchableHighlight>
+        );
+    }
+}
 export default class CheckSchoolPage extends Component {
 
     constructor(props) {
@@ -52,7 +69,10 @@ export default class CheckSchoolPage extends Component {
             loginoutdate :'',
             chsi_name:'',
             chsi_password:'',
-
+            presetDate: new Date(),
+            presetText: '请选择',
+            loginDate: new Date(),
+            loginText: '请选择'
             // typeList: {}
         })
         this.showAlertSelected = this.showAlertSelected.bind(this);
@@ -198,22 +218,36 @@ export default class CheckSchoolPage extends Component {
                 <View style={[styles.formInput, styles.formInputSplit]}>
                     <Text
                         style={{
+                            flex:1,
                             fontSize: 16, color: Common.colors.gray1,
                             alignItems: 'center', justifyContent: 'center'
                         }}>
                         入学年份
                     </Text>
-                    <TextInput
-                        ref="login_psw"
-                        style={styles.loginInput}
-                        // field.restrict = "0-9"
-                        multiline={false}
-                        // defaultValue={this.state.accountPWD.substring(1,this.state.accountPWD.length-1)}
-                        keyboardType={'default'}
-                        secureTextEntry={false}
-                        placeholder='格式:2017-11-8'
-                        underlineColorAndroid={'transparent'}
-                        onChangeText={this.onChangeStartTime.bind(this)}/>
+                    {/*<TextInput*/}
+                        {/*ref="login_psw"*/}
+                        {/*style={styles.loginInput}*/}
+                        {/*// field.restrict = "0-9"*/}
+                        {/*multiline={false}*/}
+                        {/*// defaultValue={this.state.accountPWD.substring(1,this.state.accountPWD.length-1)}*/}
+                        {/*keyboardType={'default'}*/}
+                        {/*secureTextEntry={false}*/}
+                        {/*placeholder='格式:2017-11-8'*/}
+                        {/*underlineColorAndroid={'transparent'}*/}
+                        {/*onChangeText={this.onChangeStartTime.bind(this)}/>*/}
+                    <CustomButton text={this.state.presetText}
+                                  onPress={this.showPicker.bind(this, 'preset', {date: this.state.presetDate})}/>
+                    <TouchableOpacity
+                        activeOpacity={0.5}
+                        onPress={() => this._skipIntoAccountManage("入学年份")}>
+                    {/*<Text*/}
+                        {/*style={{*/}
+                            {/*fontSize: 16, color: Common.colors.gray1,*/}
+                            {/*alignItems: 'center', justifyContent: 'center'*/}
+                        {/*}}>*/}
+                        {/*{this.state.presetDate}*/}
+                    {/*</Text>*/}
+                    </TouchableOpacity>
                 </View>
                 <View style={[styles.formInput, styles.formInputSplit]}>
                     <Text
@@ -564,23 +598,25 @@ export default class CheckSchoolPage extends Component {
                 </View>
                 <View style={[styles.formInput, styles.formInputSplit]}>
                     <Text
-                        style={{
+                        style={{flex:1,
                             fontSize: 16, color: Common.colors.gray1,
                             alignItems: 'center', justifyContent: 'center'
                         }}>
                         毕业时间
                     </Text>
-                    <TextInput
-                        ref="login_psw"
-                        style={styles.loginInput}
-                        // field.restrict = "0-9"
-                        multiline={false}
-                        // defaultValue={this.state.accountPWD.substring(1,this.state.accountPWD.length-1)}
-                        keyboardType={'default'}
-                        secureTextEntry={false}
-                        placeholder='格式:2017-11-8'
-                        underlineColorAndroid={'transparent'}
-                        onChangeText={this.onChangeLoginOutDate.bind(this)}/>
+                    <CustomButton text={this.state.loginText}
+                                  onPress={this.showPicker.bind(this, 'login', {date: this.state.loginDate})}/>
+                    {/*<TextInput*/}
+                        {/*ref="login_psw"*/}
+                        {/*style={styles.loginInput}*/}
+                        {/*// field.restrict = "0-9"*/}
+                        {/*multiline={false}*/}
+                        {/*// defaultValue={this.state.accountPWD.substring(1,this.state.accountPWD.length-1)}*/}
+                        {/*keyboardType={'default'}*/}
+                        {/*secureTextEntry={false}*/}
+                        {/*placeholder='格式:2017-11-8'*/}
+                        {/*underlineColorAndroid={'transparent'}*/}
+                        {/*onChangeText={this.onChangeLoginOutDate.bind(this)}/>*/}
                 </View>
             </View>
         )
@@ -667,6 +703,34 @@ export default class CheckSchoolPage extends Component {
                 isGao:false,
                 isChu:true
             })
+        }else if(content == '入学年份'){
+
+            // this.showPicker.bind(this,'simple', {date: this.state.presetDate});
+        }
+    }
+    //进行创建时间日期选择器
+    async showPicker(stateKey, options) {
+        try {
+            var newState = {};
+            const {action, year, month, day} = await DatePickerAndroid.open(options);
+            if (action === DatePickerAndroid.dismissedAction) {
+                newState[stateKey + 'Text'] = this.state.presetText;
+                newState[stateKey + 'Text'] = this.state.loginText;
+            } else {
+                var date = new Date(year, month, day);
+
+                newState[stateKey + 'Text'] = DateUtil.formateDate(date);
+                newState[stateKey + 'Date'] = date;
+                this.setState({
+                    start_date: DateUtil.formateDate(date),
+                    loginoutdate:DateUtil.formateDate(date)
+                });
+                // console.log('time===------------>'+time);
+            }
+            console.log('newState===------------>'+JSON.stringify(newState));
+            this.setState(newState);
+        } catch ({code, message}) {
+            console.warn(`Error in example '${stateKey}': `, message);
         }
     }
 
@@ -915,8 +979,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         height: 60,
         padding: 20,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent:'center',
+        alignItems:'center'
     },
     formInputSplit: {
         borderBottomWidth: 1,
@@ -927,8 +991,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         flex: 1,
         fontSize: 16,
-        alignItems: 'center',
-        justifyContent: 'center',
+        textAlign: 'right',
         // borderBottomWidth: 1,
         // borderBottomColor: Common.colors.bottomlinecolor,
     },
@@ -947,5 +1010,11 @@ const styles = StyleSheet.create({
         color: Common.colors.white,
         fontSize: 17,
     },
-
+    button: {
+        margin:5,
+        backgroundColor: 'white',
+        padding: 15,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: '#cdcdcd',
+    }
 });

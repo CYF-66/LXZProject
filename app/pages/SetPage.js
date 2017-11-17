@@ -23,6 +23,7 @@ import {LoginOut} from '../actions/myActions'
 import Load from '../components/Load';
 import LoginContainer from '../containers/LoginContainer'
 import RegisterContainer from '../containers/RegisterContainer'
+import AboutPage from '../pages/AboutPage'
 export default class SetPage extends Component {
 
     constructor(props) {
@@ -32,8 +33,27 @@ export default class SetPage extends Component {
             isLoading: true,
             token:'',
             refresh_token:'',
+            text:'退出登录'
             // typeList: {}
         })
+    }
+    componentWillReceiveProps(nextProps) {
+        Storage.get("isLogin").then((value) => {
+            if(value){
+                this.setState({
+                    text: '退出登录'
+                })
+            }else{
+                this.setState({
+                    text: '登录'
+                })
+                // this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                //     name:'LoginContainer',
+                //     component: LoginContainer,
+                //     // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+                // });
+            }
+        });
     }
 
     componentWillUpdate() {
@@ -43,11 +63,14 @@ export default class SetPage extends Component {
             if (myReducer.isLoginOut) {
                 // this.props.navigator.popToTop();
                 myReducer.isLoginOut=false;
-                this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
-                    name:'LoginContainer',
-                    component: LoginContainer,
-                    // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
-                });
+                // this.setState({
+                //     token: '登录'
+                // })
+                // this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                //     name:'LoginContainer',
+                //     component: LoginContainer,
+                //     // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+                // });
             }
         });
 
@@ -83,6 +106,22 @@ export default class SetPage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        Storage.get("isLogin").then((value) => {
+            if(value){
+                this.setState({
+                    text: '退出登录'
+                })
+            }else{
+                this.setState({
+                    text: '登录'
+                })
+                // this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                //     name:'LoginContainer',
+                //     component: LoginContainer,
+                //     // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+                // });
+            }
+        });
     }
 
     componentWillUnmount() {
@@ -130,7 +169,7 @@ export default class SetPage extends Component {
 
                 <TouchableOpacity
                     activeOpacity={0.5}
-                    onPress={() => this._goToLoginPage()}>
+                    onPress={() => this._skipIntoAccountManage("关于")}>
                     <View style={{
                         flexDirection: 'row',
                         padding: 15,
@@ -140,7 +179,7 @@ export default class SetPage extends Component {
                         borderBottomColor: Common.colors.bottomlinecolor,
                         borderBottomWidth: 1
                     }}>
-                        <Image source={require('../images/set/login_icon.png')} style={{
+                        <Image source={require('../images/set/icon_about.png')} style={{
                             width: 30,
                             height: 30,
                         }}/>
@@ -151,37 +190,7 @@ export default class SetPage extends Component {
                             fontSize: 15,
                             justifyContent: 'center'
                         }}>
-                            登录
-                        </Text>
-                        <Text style={{color: Common.colors.gray1, fontSize: 15,}}>
-                            >
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    activeOpacity={0.5}
-                    onPress={() => this._goToRegisterPage()}>
-                    <View style={{
-                        flexDirection: 'row',
-                        padding: 15,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: Common.colors.white,
-                        borderBottomColor: Common.colors.bottomlinecolor,
-                        borderBottomWidth: 1
-                    }}>
-                        <Image source={require('../images/set/login_icon.png')} style={{
-                            width: 30,
-                            height: 30,
-                        }}/>
-                        <Text style={{
-                            flex: 1,
-                            color: Common.colors.gray1,
-                            marginLeft: 10,
-                            fontSize: 15,
-                            justifyContent: 'center'
-                        }}>
-                            注册
+                            关于
                         </Text>
                         <Text style={{color: Common.colors.gray1, fontSize: 15,}}>
                             >
@@ -189,7 +198,7 @@ export default class SetPage extends Component {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.5} style={styles.loginBtn} onPress={this._loginOut.bind(this)}>
-                    <Text style={styles.loginText}>退出登录</Text>
+                    <Text style={styles.loginText}>{this.state.text}</Text>
                 </TouchableOpacity>
                 <Load
                     transparent={true}
@@ -201,7 +210,12 @@ export default class SetPage extends Component {
             </View>
         )
     }
-
+    _skipIntoAccountManage(){
+        this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+            component: AboutPage,
+            // passProps:{title: '常见问题',url: Common.url.questionUrl}
+        })
+    }
     _goToLoginPage(){
         // Toast.show("登录", {position: Toast.positions.CENTER});
         this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
@@ -219,17 +233,22 @@ export default class SetPage extends Component {
         })
     }
     _loginOut() {
+        const {text} =this.state;
         // Toast.show('退出登录', {position: Toast.positions.CENTER});
-        InteractionManager.runAfterInteractions(() => {
-            const {dispatch} = this.props;
-            // dispatch(GetOneKeyRegister(isLoading));
-            //11010497   cks69t
-            this.state.isLoading = true;
-            // let data = {'accountNo': account, 'loginPwd': accountPWD};
-            let data={'token ':this.state.token,'refresh_token':this.state.refresh_token};
-            console.log('data===------------>'+JSON.stringify(data));
-            dispatch(LoginOut(data, this.state.isLoading));
-        });
+        if(text=='登录'){
+            this._goToLoginPage()
+        }else{
+            InteractionManager.runAfterInteractions(() => {
+                const {dispatch} = this.props;
+                // dispatch(GetOneKeyRegister(isLoading));
+                //11010497   cks69t
+                this.state.isLoading = true;
+                // let data = {'accountNo': account, 'loginPwd': accountPWD};
+                let data={'token ':this.state.token,'refresh_token':this.state.refresh_token};
+                console.log('data===------------>'+JSON.stringify(data));
+                dispatch(LoginOut(data, this.state.isLoading));
+            });
+        }
     }
 }
 

@@ -39,6 +39,53 @@ export default class OrderPage extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps) {
+        Storage.get("isLogin").then((value) => {
+            if(value){
+                this.setState({
+                    isLogin: value
+                })
+            }else{
+                this.setState({
+                    isLogin: value
+                })
+                // this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                //     name:'LoginContainer',
+                //     component: LoginContainer,
+                //     // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+                // });
+            }
+        });
+    }
+    componentWillUpdate() {
+        InteractionManager.runAfterInteractions(() => {
+            const {loginReducer,orderReducer} = this.props;
+            console.log('loginReducer.isLoggedIn===------------>'+loginReducer.isLoggedIn);
+            if (loginReducer.isRreshOrder) {
+                // this.props.navigator.popToTop();
+                InteractionManager.runAfterInteractions(() => {
+                    NetWorkTool.checkNetworkState((isConnected)=>{
+                        if(!isConnected){
+                            Toast.show(NetWorkTool.NOT_NETWORK);
+                            return;
+                        }else{
+                            const {dispatch} = this.props;
+                            let data={'pageNum':this.state.currentPage,'pageSize':'10'};
+                            console.log('data===------------>'+JSON.stringify(data));
+                            dispatch(GetOrderList(data,this.state.isLoading,isRefreshing,isLoadMore));
+                        }
+                    });
+
+                });
+                loginReducer.isLoginOut=false;
+            }
+            if(orderReducer.isTakeOrderListSuccess){
+                loginReducer.isRreshOrder=false;
+            }
+        });
+
+    }
+
     componentWillMount() {
         NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
         Storage.get("isLogin").then((value) => {

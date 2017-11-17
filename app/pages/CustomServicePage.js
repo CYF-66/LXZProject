@@ -17,7 +17,7 @@ import Common from '../util/constants';
 import NavigationBar from 'react-native-navigationbar'
 import Toast from 'react-native-root-toast';
 import {CheckPhone} from '../actions/myActions'
-
+import Storage from '../util/Storage'
 export default class CustomServicePage extends Component {
 
     constructor(props) {
@@ -26,6 +26,8 @@ export default class CustomServicePage extends Component {
             isError: false,
             isLoading: true,
             phone: '',
+            kf_name:'',
+            kf_wechat:''
             // typeList: {}
         })
     }
@@ -45,6 +47,16 @@ export default class CustomServicePage extends Component {
         if (Platform.OS === 'android') {
             BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
         }
+        Storage.get("kf_name").then((value) => {
+            this.setState({
+                kf_name: value
+            })
+        });
+        Storage.get("kf_wechat").then((value) => {
+            this.setState({
+                kf_wechat: value
+            })
+        });
     }
 
     componentWillUnmount() {
@@ -110,7 +122,7 @@ export default class CustomServicePage extends Component {
                        客服姓名
                     </Text>
                     <Text style={{color:Common.colors.gray1,fontSize:15}}>
-                        大波波
+                        {this.state.kf_name}
                     </Text>
                 </View>
                 {/*<View style={{flexDirection:'row',padding:15,borderBottomWidth: 1,*/}
@@ -128,7 +140,7 @@ export default class CustomServicePage extends Component {
                        客服微信
                     </Text>
                     <Text style={{color:Common.colors.gray1,fontSize:15}}>
-                        112436525
+                        {this.state.kf_wechat}
                     </Text>
                 </View>
                 {/*<View style={{flexDirection:'row',padding:15,borderBottomWidth: 1,*/}

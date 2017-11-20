@@ -148,13 +148,13 @@ export default class HomePage extends Component {
                         <Image style={styles.img} source={Images[0].src}></Image>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.swiperItem}>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        onPress={() => this._skipIntoAccountManage("图片2")}>
-                        <Image style={styles.img} source={Images[1].src}></Image>
-                    </TouchableOpacity>
-                </View>
+                {/*<View style={styles.swiperItem}>*/}
+                    {/*<TouchableOpacity*/}
+                        {/*activeOpacity={1}*/}
+                        {/*onPress={() => this._skipIntoAccountManage("图片2")}>*/}
+                        {/*<Image style={styles.img} source={Images[1].src}></Image>*/}
+                    {/*</TouchableOpacity>*/}
+                {/*</View>*/}
             </Swiper>
         )
     }
@@ -416,6 +416,13 @@ export default class HomePage extends Component {
 
     _skipIntoAccountManage(content){
         // Toast.show(content, {position: Toast.positions.CENTER});
+        if(content=='图片1'){
+            this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+                component: WebViewPage,
+                passProps:{title: '流程',url: Common.url.newestMessage}
+            })
+        }
+
     }
     _clickMessage(content){
         Storage.get("isLogin").then((value) => {

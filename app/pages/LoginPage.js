@@ -46,6 +46,7 @@ export default class LoginPage extends Component {
             const {loginReducer} = this.props;
             console.log('loginReducer.isLoggedIn===------------>'+loginReducer.isLoggedIn);
             if (loginReducer.isLoggedIn) {
+                this.props.getRequestCode(0);
                 this.props.navigator.pop();
                 loginReducer.isLoggedIn=false;
             }
@@ -120,6 +121,9 @@ export default class LoginPage extends Component {
                     titleColor={Common.colors.white}
                     backColor={Common.colors.white}
                     backFunc={() => {
+                        if(this.props.ComeFrom=='order'){
+                            this.props.getRequestCode(1);
+                        }
                         this.props.navigator.pop()
                     }}
                     // actionName='添加'

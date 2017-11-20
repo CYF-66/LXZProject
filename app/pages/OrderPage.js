@@ -40,68 +40,73 @@ export default class OrderPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        Storage.get("isLogin").then((value) => {
-            if(value){
-                this.setState({
-                    isLogin: value
-                })
-            }else{
-                this.setState({
-                    isLogin: value
-                })
-                // this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
-                //     name:'LoginContainer',
-                //     component: LoginContainer,
-                //     // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
-                // });
-            }
-        });
-    }
-    componentWillUpdate() {
-        InteractionManager.runAfterInteractions(() => {
-            const {loginReducer,orderReducer} = this.props;
-            console.log('loginReducer.isLoggedIn===------------>'+loginReducer.isLoggedIn);
-            if (loginReducer.isRreshOrder) {
-                // this.props.navigator.popToTop();
-                InteractionManager.runAfterInteractions(() => {
-                    NetWorkTool.checkNetworkState((isConnected)=>{
-                        if(!isConnected){
-                            Toast.show(NetWorkTool.NOT_NETWORK);
-                            return;
-                        }else{
-                            const {dispatch} = this.props;
-                            let data={'pageNum':this.state.currentPage,'pageSize':'10'};
-                            console.log('data===------------>'+JSON.stringify(data));
-                            dispatch(GetOrderList(data,this.state.isLoading,isRefreshing,isLoadMore));
-                        }
-                    });
+        // Storage.get("isLogin").then((value) => {
+        //     if(value){
+        //         this.setState({
+        //             isLogin: value
+        //         })
+        //     }else{
+        //         this.setState({
+        //             isLogin: value
+        //         })
+        //         this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+        //             name:'LoginContainer',
+        //             component: LoginContainer,
+        //             // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+        //         });
+        //     }
+        // });
 
-                });
-                loginReducer.isLoginOut=false;
-            }
-            if(orderReducer.isTakeOrderListSuccess){
-                loginReducer.isRreshOrder=false;
-            }
-        });
 
     }
+    // componentWillUpdate() {
+    //     InteractionManager.runAfterInteractions(() => {
+    //         const {loginReducer,orderReducer} = this.props;
+    //         console.log('loginReducer.isLoggedIn===------------>'+loginReducer.isLoggedIn);
+    //         if (loginReducer.isRreshOrder&&orderReducer.isTakeOrderListSuccess) {
+    //             // this.props.navigator.popToTop();
+    //             InteractionManager.runAfterInteractions(() => {
+    //                 NetWorkTool.checkNetworkState((isConnected)=>{
+    //                     if(!isConnected){
+    //                         Toast.show(NetWorkTool.NOT_NETWORK);
+    //                         return;
+    //                     }else{
+    //                         const {dispatch} = this.props;
+    //                         let data={'pageNum':this.state.currentPage,'pageSize':'10'};
+    //                         console.log('data===------------>'+JSON.stringify(data));
+    //                         dispatch(GetOrderList(data,this.state.isLoading,isRefreshing,isLoadMore));
+    //                     }
+    //                 });
+    //
+    //             });
+    //             loginReducer.isRreshOrder=false;
+    //             loginReducer.isLoginOut=false;
+    //         }
+    //     });
+    //
+    // }
 
     componentWillMount() {
         NetWorkTool.addEventListener(NetWorkTool.TAG_NETWORK_CHANGE,this.handleMethod);
         Storage.get("isLogin").then((value) => {
             if(value){
                 // console.log('value===------------>'+value);
+                this.setState({
+                    isLogin: value
+                })
             }else{
+                // console.log('value===------------>'+value);
+                this.setState({
+                    isLogin: value
+                })
                 this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
                     name:'LoginContainer',
                     component: LoginContainer,
-                    // passProps: {contentData}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+                    passProps: {ComeFrom:'order',getRequestCode:(value)=>{this._judgeIsRefreash(value)}}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
                 });
-                // console.log('value===------------>'+value);
+                return;
             }
-            this.setState({
-                isLogin: value
-            })
+
         });
 
     }
@@ -117,17 +122,19 @@ export default class OrderPage extends Component {
     }
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            NetWorkTool.checkNetworkState((isConnected)=>{
-                if(!isConnected){
-                    Toast.show(NetWorkTool.NOT_NETWORK);
-                    return;
-                }else{
-                    const {dispatch} = this.props;
-                    let data={'pageNum':this.state.currentPage,'pageSize':'10'};
-                    console.log('data===------------>'+JSON.stringify(data));
-                    dispatch(GetOrderList(data,this.state.isLoading,isRefreshing,isLoadMore));
-                }
-            });
+            if(this.state.isLogin){
+                NetWorkTool.checkNetworkState((isConnected)=>{
+                    if(!isConnected){
+                        Toast.show(NetWorkTool.NOT_NETWORK);
+                        return;
+                    }else{
+                        const {dispatch} = this.props;
+                        let data={'pageNum':this.state.currentPage,'pageSize':'10'};
+                        console.log('data===------------>'+JSON.stringify(data));
+                        dispatch(GetOrderList(data,this.state.isLoading,isRefreshing,isLoadMore));
+                    }
+                });
+            }
 
         });
     }
@@ -370,14 +377,46 @@ export default class OrderPage extends Component {
         });
 
     }
-    _skipIntoAccountManage(content) {
-        // Toast.show(content, {position: Toast.positions.CENTER});
-        this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
-            name: 'RepaymentContainer',
-            component: RepaymentContainer,
-            passProps: {Title: '订单',book_id:content}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
-        })// push一个route对象到navigator中
+
+    // 刷新订单
+    _onRefreshOrder() {
+        InteractionManager.runAfterInteractions(() => {
+            if(this.state.isLogin){
+                NetWorkTool.checkNetworkState((isConnected)=>{
+                    if(!isConnected){
+                        Toast.show(NetWorkTool.NOT_NETWORK);
+                        return;
+                    }else{
+                        const {dispatch} = this.props;
+                        let data={'pageNum':this.state.currentPage,'pageSize':'10'};
+                        console.log('data===------------>'+JSON.stringify(data));
+                        dispatch(GetOrderList(data,this.state.isLoading,isRefreshing,isLoadMore));
+                    }
+                });
+            }
+        });
+
     }
+
+    _judgeIsRefreash(value){
+        console.log('value===------------>'+value);
+        if(value==0){//登录成功
+            this._onRefreshOrder();
+            console.log('value=0==------------>'+value);
+        }else if(value==1){//没登录直接返回
+            console.log('value=1==------------>'+value);
+            // this.props.navigator.push({// 活动跳转，以Navigator为容器管理活动页面
+            //     name:'LoginContainer',
+            //     component: LoginContainer,
+            //     passProps: {ComeFrom:'order',RequestCode:this._judgeIsRefreash(value)}// 传递的参数（可选）,{}里都是键值对  ps: test是关键字
+            // });
+            Toast.show('前去登录');
+            return;
+        }else{//-1
+            console.log('value=-1==------------>'+value);
+        }
+    }
+
 }
 
 const styles = StyleSheet.create({

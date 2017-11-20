@@ -53,7 +53,8 @@ let url={
     outTimeUrl:'http://114.67.154.29/clause.html',
     questionUrl:'http://114.67.154.29/question.html',
     registerAgreeUrl:'http://114.67.154.29/agreement.html',
-}
+    newestMessage:'http://117.48.200.2/home.html',
+};
 let mapper = {
     'calory': {name: '热量', unit: ''},
     'protein': {name: '蛋白质', unit: '克'},

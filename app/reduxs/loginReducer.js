@@ -12,7 +12,7 @@ const initialState = {
     isRefreshing: false,
     isLoggedIn: false,
     user:{},
-    isRreshOrder:true
+    isRreshOrder:false
 };
 
 let loginReducer = (state = initialState, action) => {

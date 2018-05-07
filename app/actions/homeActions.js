@@ -44,7 +44,7 @@ export let GetHomeInfo = (data,isLoading) => {
             (error) => {
                 // console.log('Fetch banner list error: ' + error);
                 dispatch({'type': types.ACTIONERROR});
-                Toast.show(err
+                Toast.show(error
                     , {position:Toast.positions.CENTER});
                 // alert('Android要用外网地址');
             }

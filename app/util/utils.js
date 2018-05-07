@@ -9,6 +9,7 @@
 // import {FormData} from 'react-native';
 import Toast from 'react-native-root-toast';
 import Storage from '../util/Storage'
+
 let Util = {
     /**
      * http get 请求简单封装
@@ -42,14 +43,14 @@ let Util = {
         //     formData.append(key, value);
         // });
         Storage.get('token').then((value) => {
-            console.log('提交参数为===data=='+data);
-            console.log('cookie===token=='+value);
+            console.log('提交参数为===data==' + data);
+            console.log('cookie===token==' + value);
             let fetchOptions = {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'cookie':'token='+value
+                    'cookie': 'token=' + value
                     // 'Content-Type': 'multipart/form-data',
                 },
                 // body: formData
@@ -57,26 +58,22 @@ let Util = {
             };
 
             fetch(url, fetchOptions)
-                .then((response) => response.text())
+            .then((response) => response.text())
+            //     .then(this.checkStatus)
                 .then((responseText) => {
                     let result = JSON.parse(responseText);
-                    // alert(result.Message);
-                    // Toast.show(JSON.stringify(result)
-                    // , {position:Toast.positions.CENTER});
-                    console.log('result='+JSON.stringify(result));
-                    // console.log('result.Message='+result.Message);
-
-                    // successCallback(result.Code, result.Message, result.Data);
-                    if(responseText.indexOf('Code')>=0&&responseText.indexOf('Message')>=0){
-                        successCallback(result.Code, result.Message, result.Data);
-                        console.log('successCallback='+JSON.stringify(result));
-                    }else{
-                        failCallback(result);
-                        console.log('failCallbackresult='+JSON.stringify(result));
-                    }
+                    Toast.show(JSON.stringify(result)
+                    , {position:Toast.positions.CENTER});
+                    successCallback(result.Code, result.Message, result.Data);
+                    console.log('successCallback=' + JSON.stringify(result));
+                    // if(responseText.indexOf('Code')>=0&&responseText.indexOf('Message')>=0){
+                    //
+                    // }else{
+                    //
+                    // }
                 })
                 .catch((err) => {
-                    console.log('------err='+err);
+                    console.log('------err=' + err);
                     // Toast.show("错误返回==="+err
                     //     , {position:Toast.positions.CENTER});
                     failCallback(err);
@@ -84,35 +81,47 @@ let Util = {
         });
 
     },
+
+    /**
+     * 分析请求返回码，作出相应的操作
+     * */
+    checkStatus: (response) => {
+        if (response.status >= 200 && response.status < 300) {
+            return response.text();
+        }
+        const error = new Error(response.statusText);
+        error.response = response;
+        throw error;
+    },
     /**
      * 使用fetch实现图片上传
      * @param {string} url  接口地址
      * @param {JSON} params body的请求参数
      * @return 返回Promise
      */
-    POSTUPLOADIMAGE:(url,params, successCallback, failCallback) => {
+    POSTUPLOADIMAGE: (url, params, successCallback, failCallback) => {
 
         let formData = new FormData();
-        for (var key in params){
+        for (var key in params) {
             formData.append(key, params[key]);
         }
         let file = {uri: params.picture, type: 'application/octet-stream', name: 'image.jpg'};
-        console.log('------file===='+file);
+        console.log('------file====' + file);
 
         // var Buffer = require('buffer').Buffer;
         // let base64Path=new Buffer(file).toString('base64');
         formData.append("picture", file);
 
-        console.log('------formData===='+JSON.stringify(formData));
+        console.log('------formData====' + JSON.stringify(formData));
 
         Storage.get('token').then((value) => {
-            console.log('提交参数为===data=='+data);
-            console.log('cookie===token=='+value);
+            console.log('提交参数为===data==' + data);
+            console.log('cookie===token==' + value);
             let fetchOptions = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'multipart/form-data;charset=utf-8',
-                    'cookie':'token='+value
+                    'cookie': 'token=' + value
                     // 'Content-Type': 'multipart/form-data',
                 },
                 body: formData
@@ -126,7 +135,7 @@ let Util = {
                     // alert(result.Message);
                     // Toast.show(JSON.stringify(result)
                     // , {position:Toast.positions.CENTER});
-                    console.log('responseData='+responseData);
+                    console.log('responseData=' + responseData);
                     // console.log('result.Message='+result.Message);
 
                     // successCallback(result.Code, result.Message, result.Data);
@@ -137,7 +146,7 @@ let Util = {
                     // }
                 })
                 .catch((err) => {
-                    console.log('------err='+err);
+                    console.log('------err=' + err);
                     // Toast.show("错误返回==="+err
                     //     , {position:Toast.positions.CENTER});
                     failCallback(err);
@@ -150,7 +159,7 @@ let Util = {
      */
     log: (obj) => {
         var description = "";
-        for(let i in obj){
+        for (let i in obj) {
             let property = obj[i];
             description += i + " = " + property + "\n";
         }
